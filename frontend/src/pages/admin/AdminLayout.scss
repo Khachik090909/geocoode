@@ -1,0 +1,92 @@
+button {
+  cursor: pointer;
+  color: white;
+  background-color: transparent;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+button:hover {
+  transform: scale(1.1);
+  color: #10fffe;
+}
+.admin-layout {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100dvh;
+  background: #283131;
+  .admin-layout-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 22vw;
+    height: 100%;
+    background: #12110b;
+    border-radius: 0 10px 10px 0;
+    button {
+      display: flex;
+      width: 100%;
+      height: 10vh;
+      display: flex;
+      align-items: center;
+      img {
+        width: 4vw;
+        height: 4vw;
+        margin-right: 10px;
+      }
+      h5 {
+        font-size: clamp(1px, 2vw, 3rem);
+      }
+    }
+    .admin-layout-header {
+      width: 100%;
+      height: 12vh;
+      display: flex;
+      padding: 16px;
+      color: white;
+      img {
+        width: 5vw;
+        height: 5vw;
+        margin-right: 10px;
+      }
+      h4 {
+        font-size: clamp(1px, 2vw, 3rem);
+      }
+      p {
+        font-size: clamp(1px, 1.5vw, 2rem);
+      }
+    }
+    .admin-layout-section {
+      width: 100%;
+      height: 87vh;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+  }
+  .admin-information {
+    height: 100vh;
+    margin-left: 22vw;
+    input {
+      background: none;
+      border: none;
+    }
+    .admin-information-input-id {
+      width: 3vw;
+    }
+    .admin-information-header {
+      height: 4vh;
+      display: flex;
+
+      border: red 1px solid;
+    }
+    .admin-information-section {
+      .admin-information-line {
+        display: flex;
+      }
+    }
+  }
+}

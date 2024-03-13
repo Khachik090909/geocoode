@@ -1,0 +1,196 @@
+.reservation {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  border-radius: 10px 0 0 10px;
+  z-index: 1004;
+  width: 30%;
+  height: calc(100vh - 50px);
+  .reservation-informations {
+    height: calc((100vh - 50px) * 0.65);
+    display: flex;
+    flex-direction: column;
+    color: white;
+    gap: 10px;
+    padding-inline: 1rem;
+
+    .button-close-modal-main {
+      display: flex;
+      justify-content: end;
+      .boutton-close-modal-reservation {
+        height: 30px;
+        width: 30px;
+      }
+    }
+
+    .informations-title {
+      font-size: 24px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .informations-data {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 16px;
+      div {
+        display: flex;
+
+        img {
+          width: 20px;
+          margin-right: 8px;
+        }
+        p {
+          margin: auto 0;
+
+          font-size: 1rem;
+          padding: 3px;
+        }
+      }
+      h3 {
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+    }
+
+    .informations-plug-desktop {
+      display: flex;
+      justify-content: space-around;
+
+      img {
+        width: 18%;
+      }
+    }
+  }
+  .reservation-validation {
+    height: calc((100vh - 50px) * 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 10px;
+    background: rgba(217, 217, 217, 0.7);
+    padding: 1rem;
+
+    h2 {
+      font-size: 24px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .time-slot-container {
+      width: 70%;
+      border-radius: 10px;
+      border: 1px solid #10fffe;
+      background: rgba(40, 49, 49, 1);
+      text-align: center;
+      font-size: 20px;
+      height: 50px;
+      margin-top: 8px;
+      input {
+        background-color: transparent;
+        border: none;
+        color: white;
+      }
+      input[type="time"]::-webkit-calendar-picker-indicator {
+        filter: invert(1); /* Inversion des couleurs pour les icônes */
+        color: white; /* Couleur du texte */
+      }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1); /* Inversion des couleurs pour les icônes */
+        color: white; /* Couleur du texte */
+      }
+    }
+
+    .button-validation-calendar {
+      color: black;
+      margin: 8px;
+      padding: 8px;
+      width: 50%;
+      border-radius: 5px;
+      background: #10fffe;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+      font-size: clamp(0.1rem, 2vw, 1rem);
+      font-weight: 600;
+    }
+
+    .background-modal-validation-reservation {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 100vh;
+      z-index: 1005;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(1.5px);
+      }
+
+      .modal-validation-reservation {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        max-width: 400px;
+        height: auto;
+        padding: 16px;
+        border-radius: 20px;
+        background-color: gray;
+        color: white;
+        font-size: 16px;
+        border: 2px solid black;
+
+        .reservation-price {
+          margin: 8px;
+          margin-top: 0px;
+          strong {
+            font-weight: bold;
+          }
+        }
+
+        .reservation-button {
+          display: flex;
+          justify-content: space-around;
+
+          .validation-reservation-button,
+          .cancellation-reservation-button {
+            padding: 16px;
+            display: flex;
+            height: 38px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            background: var(--Color-3, #10fffe);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+          }
+        }
+      }
+    }
+  }
+  .leaflet-routing-container {
+    visibility: hidden;
+  }
+}
+
+// @media screen and (min-width: 768px) {
+//   .reservation-main {
+//     width: 40%;
+//     max-width: 450px;
+//     height: auto;
+//   }
+// }
