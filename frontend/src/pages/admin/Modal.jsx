@@ -1,6 +1,6 @@
 // UsersManagement.jsx
 import { useEffect, useState } from "react";
-import BodyModal from "./bodyModal";
+import BodyModal from "./BodyModal";
 import FooyerModal from "./FooyerModal";
 
 function Modal(route) {
@@ -19,7 +19,7 @@ function Modal(route) {
     const key = Object.keys(sort);
     const value = Object.values(sort);
     console.log(key, value);
-    if (key == "id") {
+    if (!isNaN(value)) {
       for (let i = 0; i < data.length; i++) {
         if (data[i][key] == value) {
           specificNameEntries.push(data[i]);

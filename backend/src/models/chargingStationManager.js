@@ -12,7 +12,7 @@ class ChargingStationManager extends AbstractManager {
     // Performing a database query to select all records from the charging station table
     const [rows] = await this.database
       .query(`select charging_station.consolidated_latitude,charging_station.consolidated_longitude,charging_station.id
-    from ${this.table} WHERE prise_type_ef = "TRUE"
+    from ${this.table} WHERE prise_type_ef = "TRUE"OR prise_type_2 = "TRUE" OR prise_type_combo_ccs = "TRUE" OR prise_type_chademo = "TRUE" OR prise_type_autre = "TRUE" OR prise_type_ef = TRUE OR prise_type_2 = TRUE OR prise_type_combo_ccs = TRUE OR prise_type_chademo = TRUE OR prise_type_autre = TRUE
      `);
     return rows;
   }
@@ -28,6 +28,6 @@ from ${this.table}`);
   }
 }
 
-//OR prise_type_2 = "TRUE" OR prise_type_combo_ccs = "TRUE" OR prise_type_chademo = "TRUE" OR prise_type_autre = "TRUE" OR prise_type_ef = TRUE OR prise_type_2 = TRUE OR prise_type_combo_ccs = TRUE OR prise_type_chademo = TRUE OR prise_type_autre = TRUE
+//
 // Exporting the ChargingStationManager class
 module.exports = ChargingStationManager;

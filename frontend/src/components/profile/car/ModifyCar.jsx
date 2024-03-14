@@ -35,6 +35,7 @@ function ModifyCar() {
           body: JSON.stringify(dataDeleteCar),
         }
       );
+      console.log(response);
       await response.json();
 
       setDataDeleteCar(null);

@@ -89,13 +89,27 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
   };
   const deletedata = async (id) => {
     try {
-      await fetch(`${VITE_BACKEND_URL}/api/${route.route}/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${VITE_BACKEND_URL}/api/${route.route}/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      if (!response.ok) {
+        const dataresponse = await response.json();
+        if (dataresponse.validationErrors.length > 0) {
+          setIsErrors(dataresponse.validationErrors);
+        }
+        throw new Error("Erreur lors de l'inscription");
+      } else {
+        setIsErrors(null);
+        setIsSubmit(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -113,6 +127,7 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
           body: JSON.stringify(data),
         }
       );
+      console.log(response);
       if (!response.ok) {
         const dataresponse = await response.json();
         if (dataresponse.validationErrors.length > 0) {
