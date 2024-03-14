@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Alert from "../../alert/alert";
 import croix from "../../../assets/croix.svg";
@@ -9,8 +9,19 @@ function RegistrationForm({ setIsSignupModal }) {
   const { VITE_BACKEND_URL } = import.meta.env;
   const [isErrors, setIsErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
-  const [data, setData] = useState({ is_admin: 0 });
-  const [verify, setVerify] = useState({});
+  const [data, setData] = useState({
+    name: "",
+    firstname: "",
+    email: "",
+    gender: "",
+    date_of_birth: "",
+    postal_code: "",
+    city: "",
+    number_vehicles: "",
+    profil_image: "",
+    password: "",
+    confirm_password: "",
+  });
   const [showPassword1, setShowPassword1] = useState(true);
   const [showPassword2, setShowPassword2] = useState(true);
   useEffect(() => {
@@ -20,39 +31,44 @@ function RegistrationForm({ setIsSignupModal }) {
     });
   }, []);
   const formPostData = async () => {
-    console.log(data);
     // Vérifier si le mot de passe et la confirmation du mot de passe sont identiques
-    if (data.password === verify) {
-      try {
-        console.log(data);
-        const response = await fetch(`${VITE_BACKEND_URL}/api/users/`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });
-        if (!response.ok) {
-          const dataresponse = await response.json();
-          if (dataresponse.validationErrors.length > 0) {
-            setIsErrors(dataresponse.validationErrors);
-          }
-          throw new Error("Erreur lors de l'inscription");
-        } else {
-          setIsErrors(null);
-          setIsSubmit(true);
+    try {
+      const response = await fetch(`${VITE_BACKEND_URL}/api/users/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setIsErrors([
+            {
+              message: "L'email existe déjà.",
+              field: "email",
+            },
+          ]);
         }
-      } catch (error) {
-        console.error(error);
+        const dataresponse = await response.json();
+        console.log(dataresponse);
+        if (dataresponse.validationErrors.length > 0) {
+          setIsErrors(dataresponse.validationErrors);
+        }
+        throw new Error("Erreur lors de l'inscription");
+      } else {
+        setIsErrors(null);
+        setIsSubmit(true);
+        setTimeout(() => {
+          setIsSignupModal(false);
+        }, 2000);
       }
-    } else {
-      alert(
-        "Le mot de passe et la confirmation du mot de passe ne correspondent pas."
-      );
-      return;
+    } catch (error) {
+      console.error(error);
     }
+
+    return;
   };
-  console.log(data);
   return (
     <div className="background-modal">
       {(isErrors || isSubmit) && <Alert errors={isErrors} submit={isSubmit} />}
@@ -152,7 +168,9 @@ function RegistrationForm({ setIsSignupModal }) {
               type={showPassword2 ? "password" : "text"}
               placeholder="Confirmer"
               value={data.confirm_password}
-              onChange={(e) => setVerify(e.target.value)}
+              onChange={(e) =>
+                setData({ ...data, confirm_password: e.target.value })
+              }
             />
             <button
               type="button"

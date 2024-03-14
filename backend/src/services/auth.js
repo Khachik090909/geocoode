@@ -74,7 +74,6 @@ const verifyToken = async (req, res, next) => {
     }
 
     req.payload = jwt.verify(token, process.env.JWT_SECRET);
-
     delete req.payload.sub.hashed_password;
 
     next();
@@ -176,6 +175,16 @@ const verifyAdmin = async (req, res, next) => {
   req.query.is_admin = rows[0].is_admin;
   next();
 };
+const verifyExistEmail = async (req, res, next) => {
+  const [rows] = await client.query("SELECT email FROM user WHERE email = ?", [
+    req.body.email,
+  ]);
+  if (rows.length > 0) {
+    return res.status(400).send("Email already exists");
+  } else {
+    next();
+  }
+};
 module.exports = {
   hashPassword,
   verifyPassword,
@@ -185,4 +194,5 @@ module.exports = {
   missingElements,
   addPassword,
   verifyAdmin,
+  verifyExistEmail,
 };

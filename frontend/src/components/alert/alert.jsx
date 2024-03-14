@@ -60,7 +60,6 @@ function Alert({ errors, submit }) {
                     </span>
                     <span className="sr-only">Close</span>
                   </button>
-                  <i className="start-icon far fa-times-circle faa-pulse animated" />
                   <strong className="font__weight-semibold"> Oops !</strong>{" "}
                   Modifiez et réessayez. <br />
                   {errors &&

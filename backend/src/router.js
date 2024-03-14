@@ -16,6 +16,7 @@ const {
   missingElements,
   addPassword,
   verifyAdmin,
+  verifyExistEmail,
 } = require("./services/auth");
 
 // Import itemControllers module for handling item-related operations
@@ -68,7 +69,13 @@ router.get("/users/statistics", verifyToken, userControllers.browseStatistics);
 router.get("/users/:id", verifyToken, userControllers.read);
 router.get("/users/:id/admin", verifyToken, userControllers.readIsAdmin);
 router.get("/users-admin", verifyToken, userControllers.readAllUserAdmin);
-router.post("/users/", validateUser, hashPassword, userControllers.add);
+router.post(
+  "/users/",
+  validateUser,
+  verifyExistEmail,
+  hashPassword,
+  userControllers.add
+);
 router.post(
   "/users/login",
   validateUserLogin,

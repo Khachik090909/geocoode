@@ -1,5 +1,6 @@
 const validateUser = (req, res, next) => {
   // Extraction des données du corps de la requête
+
   const {
     name,
     firstname,
@@ -10,7 +11,8 @@ const validateUser = (req, res, next) => {
     city,
     number_vehicles: numberVehiclesString,
     profil_image: profilImage,
-    is_admin: isAdmin,
+    password,
+    confirm_password: confirmPassword,
   } = req.body;
 
   // Expressions régulières pour la validation
@@ -19,7 +21,6 @@ const validateUser = (req, res, next) => {
 
   // Tableau pour stocker les erreurs de validation
   const errors = [];
-
   // Validation pour le champ 'name'
   if (name == null) {
     errors.push({ field: "Nom", message: "Ce champ est obligatoire" });
@@ -123,21 +124,25 @@ const validateUser = (req, res, next) => {
       });
     }
   }
-
-  // Validation pour le champ 'is_admin'
-  if (isAdmin == null) {
-    errors.push({ field: "isAdmin", message: "Ce champ est obligatoire" });
-  } else if (![0, 1].includes(isAdmin)) {
+  if (password.length < 8) {
     errors.push({
-      field: "isAdmin",
-      message: "Le rôle doit être 0 ou 1",
+      field: "password",
+      message: "Le mot de passe doit contenir au moins 8 caractères",
     });
   }
-
+  if (password !== confirmPassword) {
+    errors.push({
+      field: "confirmPassword",
+      message: "Les mots de passe ne sont pas identiques",
+    });
+  }
   // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
+    delete req.body.confirm_password;
+
+    req.body.is_admin = 0;
     // Si aucune erreur, passe à la fonction middleware suivante
     next();
   }
