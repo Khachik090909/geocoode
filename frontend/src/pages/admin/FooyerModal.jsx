@@ -5,7 +5,7 @@ function FooyerModal({ dataLenght, setLimit }) {
   const [buttonClick, setButtonClick] = useState(1);
   useEffect(() => {
     const element = [];
-    for (let i = 0; i < Math.ceil(dataLenght / 15); i += 1) {
+    for (let i = 0; i < Math.ceil(dataLenght / 20); i += 1) {
       element.push(i + 1);
     }
     if (element.length > 20) {
@@ -23,7 +23,7 @@ function FooyerModal({ dataLenght, setLimit }) {
   }, [buttonClick, dataLenght]);
 
   return (
-    <div>
+    <div style={{ marginLeft: "10vw" }}>
       {buttonClick !== 1 && (
         <button
           type="button"
@@ -42,7 +42,8 @@ function FooyerModal({ dataLenght, setLimit }) {
             id={elem}
             onClick={() => setButtonClick(elem)}
             style={{
-              color: buttonClick === elem ? "rgb(148, 231, 15)" : "white",
+              color: buttonClick === elem ? "#10fffe" : "white",
+              margin: "0 5px",
             }}
           >
             {elem}

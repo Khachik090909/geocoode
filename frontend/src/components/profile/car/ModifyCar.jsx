@@ -23,7 +23,6 @@ function ModifyCar() {
   const handlerDeleteCar = async () => {
     try {
       const { id } = dataDeleteCar;
-      console.log(dataDeleteCar);
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`,
         {
@@ -35,7 +34,6 @@ function ModifyCar() {
           body: JSON.stringify(dataDeleteCar),
         }
       );
-      console.log(response);
       await response.json();
 
       setDataDeleteCar(null);
@@ -63,7 +61,7 @@ function ModifyCar() {
       )}
       {dataDeleteCar && (
         <div className="delete-car-modal">
-          <h1>Voulez-vous vraiment supprimer ce véhicule ?</h1>
+          <h1>Voulez-vous supprimer ce véhicule ?</h1>
           <div className="delete-car-modal-content">
             <ul className="delete-car-modal-content-text">
               <li>Marque: {dataDeleteCar.Marque}</li>
@@ -75,7 +73,7 @@ function ModifyCar() {
                 Annuler
               </button>
               <button type="button" onClick={() => handlerDeleteCar()}>
-                <h3>Supprimer</h3>
+                Supprimer
               </button>
             </div>
           </div>

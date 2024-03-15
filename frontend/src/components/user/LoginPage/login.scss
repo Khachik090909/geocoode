@@ -1,3 +1,9 @@
+button:focus {
+  outline: none;
+}
+input:focus {
+  outline: none;
+}
 .login-page {
   position: relative;
   width: 100%;
@@ -37,6 +43,13 @@
         background: none;
         color: black;
         margin-inline: 10px;
+        font-size: clamp(0.8rem, 2vw, 1rem);
+      }
+      .login-page-input-password {
+        width: 19vw;
+      }
+      .login-page-input-text {
+        width: 22vw;
       }
     }
   }
@@ -69,9 +82,63 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-  .registration-contain {
-    width: 40%;
-    max-width: 450px;
+@media screen and (max-width: 950px) {
+  .login-page {
+    .login-contain {
+      .form-email-password {
+        width: 30vw;
+        .login-page-input-password {
+          width: 20vw;
+        }
+        .login-page-input-text {
+          width: 25vw;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 850px) {
+  .login-page {
+    .login-contain {
+      .form-email-password {
+        width: 35vw;
+        .login-page-input-password {
+          width: 25vw;
+        }
+        .login-page-input-text {
+          width: 28vw;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 690px) {
+  .login-page {
+    .login-contain {
+      .form-email-password {
+        width: 40vw;
+        .login-page-input-password {
+          width: 28vw;
+        }
+        .login-page-input-text {
+          width: 32vw;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 580px) {
+  .login-page {
+    .login-contain {
+      .form-email-password {
+        width: 60vw;
+        .login-page-input-password {
+          width: 28vw;
+        }
+        .login-page-input-text {
+          width: 32vw;
+        }
+      }
+    }
   }
 }

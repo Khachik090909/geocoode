@@ -147,7 +147,9 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
       <section className="admin-information-section">
         {dataLoad.map((item, indexX) => (
           <div
-            className="admin-information-line"
+            className={`admin-information-line ${
+              indexX % 2 === 0 ? "line-1" : "line-2"
+            }`}
             key={item.id}
             style={
               idElementDeleite.includes(item.id)
@@ -192,6 +194,7 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
       </section>
       {!valider && (
         <button
+          className="admin-information-button-valider"
           type="batton"
           onClick={() => {
             setMotor(!motor);
@@ -202,7 +205,11 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
         </button>
       )}
       {valider && (
-        <button type="batton" onClick={() => postDeleteData()}>
+        <button
+          className="admin-information-button-valider"
+          type="batton"
+          onClick={() => postDeleteData()}
+        >
           valider
         </button>
       )}

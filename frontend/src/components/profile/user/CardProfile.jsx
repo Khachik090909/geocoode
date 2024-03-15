@@ -110,7 +110,7 @@ function CardProfile() {
           </ul>
         </div>
         {show && (
-          <div className="cart-content-up">
+          <div className="cart-content-down">
             <ul className="cart-content-text">
               <li>{userData.email}</li>
               {genderFr && <li>{genderFr}</li>}

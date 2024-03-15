@@ -70,6 +70,7 @@ function LoginPage() {
           <div>
             <img src={email} alt="email" />
             <input
+              className="login-page-input-text"
               type="text"
               placeholder="Adresse email"
               onChange={(e) => setData({ ...data, email: e.target.value })}
@@ -80,6 +81,7 @@ function LoginPage() {
           <div>
             <img src={password} alt="email" />
             <input
+              className="login-page-input-password"
               type={isVisible ? "text" : "password"}
               placeholder="Mot de passe"
               onChange={(e) => setData({ ...data, password: e.target.value })}

@@ -66,7 +66,7 @@ function CardPlug() {
     window.location.reload();
   };
   return (
-    <div className="card-profile">
+    <div className={show ? "card-profile-show card-profile" : "card-profile"}>
       <div className="card-profile-header">
         <div className="card-profile-button-title">
           <button
@@ -107,15 +107,16 @@ function CardPlug() {
             </ul>
           )}
         </div>
-        <div className="cart-content-text">
-          {reservation.length > 0 && show && (
+
+        {reservation.length > 0 && show && (
+          <div className="cart-content-down">
             <ul>
               <li>{`Date : ${reservation[0].reservationDate}`}</li>
               <li>{`Heure : ${reservation[0].reservationHeure}`}</li>
               <li>{`Tarif : ${reservation[0].amountPaid} €`}</li>
-            </ul>
-          )}
-        </div>
+            </ul>{" "}
+          </div>
+        )}
       </div>
     </div>
   );
