@@ -61,7 +61,7 @@ function Modal(route) {
 
       setData(data);
 
-      setDataLoad(data.slice(0, 15));
+      setDataLoad(data.slice(0, 20));
     } catch (error) {
       throw Error("error", error);
     }
@@ -69,9 +69,9 @@ function Modal(route) {
   useEffect(() => {
     if (sort) {
       const dataSort = sortData(data, sort);
-      setDataLoad(dataSort.slice(limit * 15 - 15, limit * 15));
+      setDataLoad(dataSort.slice(limit * 20 - 20, limit * 20));
     } else {
-      setDataLoad(data.slice(limit * 15 - 15, limit * 15));
+      setDataLoad(data.slice(limit * 20 - 20, limit * 20));
     }
   }, [limit, data, sort]);
   useEffect(() => {
@@ -80,7 +80,7 @@ function Modal(route) {
   }, [route]);
   return (
     <>
-      {dataLoad.length > 0 && dataLoad.length < 16 && (
+      {dataLoad.length > 0 && dataLoad.length < 21 && (
         <div className="admin-information">
           <header className="admin-information-header">
             <div style={{ width: "30px", height: "30px" }}></div>
@@ -88,7 +88,7 @@ function Modal(route) {
               <input
                 type="text"
                 id={key}
-                className={`admin-information-input-${key}`}
+                className={`admin-information-input-sort admin-information-input-${key}`}
                 key={key}
                 placeholder={key}
                 value={sort ? sort[key] : ""}

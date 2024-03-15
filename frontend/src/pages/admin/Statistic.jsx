@@ -54,13 +54,13 @@ function Statistic() {
     });
   }, []);
   return (
-    <div className="admin-information">
-      <h1>Statistiques</h1>
+    <div className="admin-information-statistic">
+      <h1 className="admin-h1-statistic">Statistiques</h1>
       <div>
         {statistic.length > 0 &&
           statistic.map((data) => (
             <div key={data.name}>
-              <h1>{data.name + ": " + Object.values(data.data)}</h1>
+              <h1>{data.name + ":" + " " + Object.values(data.data)}</h1>
             </div>
           ))}
       </div>

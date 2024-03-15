@@ -12,7 +12,7 @@ function Navbar() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    if (window.innerWidth < 500) {
+    if (window.innerWidth < 450) {
       setMobile(true);
       setButtonClick(false);
     } else {
@@ -23,15 +23,9 @@ function Navbar() {
 
   useEffect(() => {
     if (token) {
-      setNavbarData([
-        "Map",
-        "Profile",
-        "contact",
-        "A propos",
-        "Se deconnecter",
-      ]);
+      setNavbarData(["Map", "Profile", "contact", "Se deconnecter"]);
     } else {
-      setNavbarData(["Map", "contact", "A propos", "Se connecter"]);
+      setNavbarData(["Map", "contact", "Se connecter"]);
     }
   }, [token]);
 
@@ -42,8 +36,6 @@ function Navbar() {
       navigate("/profile");
     } else if (item === "contact") {
       setOpenContact(true);
-    } else if (item === "A propos") {
-      navigate("/about");
     } else if (item === "Se deconnecter") {
       localStorage.removeItem("user");
       localStorage.removeItem("token");

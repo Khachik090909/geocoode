@@ -25,9 +25,11 @@
     }
 
     .informations-title {
-      font-size: 24px;
-      text-align: center;
-      font-weight: bold;
+      h2 {
+        font-size: clamp(0.9rem, 2vw, 2.5rem);
+        text-align: center;
+        font-weight: bold;
+      }
     }
 
     .informations-data {
@@ -45,7 +47,7 @@
         p {
           margin: auto 0;
 
-          font-size: 1rem;
+          font-size: clamp(0.9rem, 1.5vw, 1.5rem);
           padding: 3px;
         }
       }
@@ -53,16 +55,19 @@
         text-align: center;
         font-weight: 700;
         margin-bottom: 6px;
+        font-size: clamp(1.5rem, 2vw, 2.5rem);
       }
     }
 
     .informations-plug-desktop {
       display: flex;
       justify-content: space-around;
-
       img {
         width: 18%;
       }
+    }
+    .informations-price-reservation {
+      font-size: clamp(1.2rem, 2vw, 2.5rem);
     }
   }
   .reservation-validation {
@@ -76,7 +81,7 @@
     padding: 1rem;
 
     h2 {
-      font-size: 24px;
+      font-size: clamp(1.8rem, 2vw, 2.5rem);
       font-weight: 800;
       text-align: center;
     }
@@ -94,6 +99,7 @@
         background-color: transparent;
         border: none;
         color: white;
+        font-size: clamp(0.8rem, 2vw, 1.5rem);
       }
       input[type="time"]::-webkit-calendar-picker-indicator {
         filter: invert(1); /* Inversion des couleurs pour les icônes */
@@ -104,7 +110,6 @@
         color: white; /* Couleur du texte */
       }
     }
-
     .button-validation-calendar {
       color: black;
       margin: 8px;
@@ -113,84 +118,144 @@
       border-radius: 5px;
       background: #10fffe;
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
-      font-size: clamp(0.1rem, 2vw, 1rem);
+      font-size: clamp(0.8rem, 2vw, 1rem);
       font-weight: 600;
     }
+  }
+}
+@media screen and (max-width: 768px) {
+  .reservation {
+    position: absolute;
+    left: 0;
+    top: 70vh;
+    width: 100%;
+    height: 30vh;
+    .reservation-modal {
+      display: flex;
 
-    .background-modal-validation-reservation {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      height: 100vh;
-      z-index: 1005;
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        backdrop-filter: blur(1.5px);
-      }
-
-      .modal-validation-reservation {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 50%;
-        max-width: 400px;
-        height: auto;
-        padding: 16px;
-        border-radius: 20px;
-        background-color: gray;
-        color: white;
-        font-size: 16px;
-        border: 2px solid black;
-
-        .reservation-price {
-          margin: 8px;
-          margin-top: 0px;
-          strong {
-            font-weight: bold;
+      .reservation-informations {
+        width: 70vw;
+        gap: 0;
+        padding: 8px;
+        .button-close-modal-main {
+          position: absolute;
+          display: flex;
+          justify-content: start;
+          .boutton-close-modal-reservation {
+            height: 30px;
+            width: 30px;
           }
         }
-
-        .reservation-button {
-          display: flex;
-          justify-content: space-around;
-
-          .validation-reservation-button,
-          .cancellation-reservation-button {
-            padding: 16px;
-            display: flex;
-            height: 38px;
-            justify-content: center;
-            align-items: center;
-            border-radius: 20px;
-            background: var(--Color-3, #10fffe);
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 600;
-            transition: transform 0.3s ease;
+        .informations-title {
+          h2 {
+            padding: 8px 5px 0 35px;
           }
+        }
+        .informations-data {
+          gap: 1px;
+          div {
+            display: flex;
+
+            img {
+              width: 15px;
+              margin-right: 8px;
+            }
+            p {
+              font-size: clamp(0.8rem, 1.5vw, 1.5rem);
+            }
+          }
+          h3 {
+            margin-bottom: 2px;
+            font-size: clamp(1rem, 2vw, 2.5rem);
+          }
+        }
+        .informations-plug-desktop {
+          padding: 5px;
+          img {
+            width: 8%;
+          }
+        }
+      }
+      .reservation-validation {
+        height: 30vh;
+
+        border-radius: 0 0 10px 0;
+
+        padding: 5px;
+        width: 30vw;
+
+        h2 {
+          font-size: clamp(1.2rem, 4vw, 2.5rem);
+        }
+
+        .time-slot-container {
+          width: 90%;
+          height: 40px;
+        }
+        .button-validation-calendar {
+          color: black;
+          margin: 18px 0;
+          padding: 8px;
+          width: 90%;
         }
       }
     }
   }
-  .leaflet-routing-container {
-    visibility: hidden;
+}
+@media screen and (max-width: 400px) {
+  .reservation {
+    top: 55vh;
+    height: 40vh;
+    .reservation-modal {
+      display: flex;
+      flex-direction: column;
+
+      .reservation-informations {
+        width: 100vw;
+        height: 27vh;
+
+        .button-close-modal-main {
+          right: 10px;
+        }
+        .informations-title {
+          h2 {
+            padding: 8px 35px 0 5px;
+          }
+        }
+        .informations-data {
+          gap: 0px;
+
+          h3 {
+            margin-bottom: 0;
+            font-size: clamp(0.8rem, 2vw, 2.5rem);
+          }
+        }
+        .informations-plug-desktop {
+          padding: 2px;
+        }
+      }
+      .reservation-validation {
+        height: 18vh;
+        border-radius: 0 0 10px 0;
+        padding: 5px;
+        width: 100vw;
+        h2 {
+          font-size: clamp(1.2rem, 4vw, 2.5rem);
+          margin: 0;
+          padding: 0;
+        }
+
+        .time-slot-container {
+          margin: 2px;
+
+          width: 90%;
+          height: 30px;
+        }
+        .button-validation-calendar {
+          margin: 8px 0;
+          padding: 4px;
+        }
+      }
+    }
   }
 }
-
-// @media screen and (min-width: 768px) {
-//   .reservation-main {
-//     width: 40%;
-//     max-width: 450px;
-//     height: auto;
-//   }
-// }

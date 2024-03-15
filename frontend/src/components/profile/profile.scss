@@ -1,6 +1,14 @@
 .profile {
-  width: 100%;
-  height: 100%;
+  li {
+    list-style: none;
+  }
+  button:focus {
+    outline: none;
+  }
+  input:focus {
+    outline: none;
+  }
+  min-height: 100vh;
   background-image: url("../../assets/images/bckground.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -9,80 +17,67 @@
   align-items: center;
   color: white;
 
-  .row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    gap: 8px;
-    img {
-      height: 50px;
-    }
-    a {
-      font-size: 20px;
-    }
-  }
-
   .profile-garage {
-    background-image: url("../../assets/images/garage.png");
+    background-image: url("../../assets/images/backgrounddesktop.png");
     background-repeat: no-repeat;
     background-size: contain;
-    background-position: center;
-    width: 480px;
-    height: 245px;
-    margin-bottom: 1.5rem;
 
-    img {
-      width: 100%;
-      height: 350px;
-    }
+    background-size: 65vw;
+    background-position: bottom;
+    width: 65vw;
+    height: 25vh;
     .profile-garage-text {
       position: relative;
       display: flex;
       height: 100%;
       .picture-car {
         position: absolute;
-        top: 50%;
-        right: 2%;
-        height: 50%;
-        max-height: 160px;
-        width: 50%;
-        max-width: 240px;
-        background-image: url("../../assets/imagesvoitures/audi-e-tron-gt-476.png");
+        top: 7vh;
+        right: 10px;
+        height: 10vw;
+        width: 22vw;
+        background-image: url("../../assets/images/audi-e-tron-gt-476.png");
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: top;
       }
       p,
       h1 {
         position: relative;
-        top: 48%;
-        left: 20px;
-        height: 36px;
-        font-family: sans-serif;
-        font-size: clamp(1rem, 2vw, 1.5rem);
+        top: 32%;
+        left: 25%;
+
+        font-size: clamp(1rem, 3vw, 2.5rem);
       }
+    }
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
+
+    margin: 1vh;
+    img {
+      height: 4vh;
+    }
+    a {
+      font-size: clamp(1rem, 3vw, 2rem);
     }
   }
   .df-row {
     display: flex;
-    flex-wrap: wrap;
-    margin-inline: auto;
-    width: 100%;
-    height: 100%;
-    gap: 1rem;
+    flex-direction: column;
+    justify-content: space-between;
 
     .card-profile {
       border: 1px solid #465454;
-      width: 420px;
-      max-height: 100%;
+      width: 65vw;
+      margin: 0 auto 2vh auto;
       background-color: rgba(40, 49, 49, 1);
-      margin: 0 auto;
-      padding: 8px 3%;
+      padding: 8px 8%;
       border-radius: 10px;
-
-      button {
-        cursor: pointer;
-      }
 
       .card-profile-header {
         height: 4vh;
@@ -113,124 +108,52 @@
           gap: 3px;
           display: flex;
           justify-content: end;
-          cursor: pointer;
         }
       }
 
       .card-profile-line {
-        margin: 3px 0;
         width: 100%;
       }
       .cart-content {
         display: flex;
         flex-direction: column;
-        margin: 1rem;
-        min-height: 100px;
+        margin-inline: 1rem;
 
         .cart-content-up {
-          height: 100px;
-          width: 100%;
+          height: 11vh;
           display: flex;
-          flex-direction: row;
-          gap: 1rem;
-
-          .car-profil-user-fond {
-            position: relative;
-            background-color: #85d9ec; /* Couleur du cercle */
-            border-radius: 50%; /* Pour créer un cercle */
-            width: 350px; /* Largeur du cercle */
-            height: 100px; /* Hauteur du cercle */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+          justify-content: space-between;
+          img {
+            height: 11vh;
+            width: 11vh;
           }
-          .car-profil-user {
-            position: absolute;
-            object-fit: contain;
-            top: 0;
-            width: 200px;
-            height: 120px;
+          .cart-content-text {
+            width: 100%;
+            height: 11vh;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+
+            li {
+              text-align: end;
+              width: 100%;
+              font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+            }
           }
         }
         .cart-content-down {
-          height: 100%;
-          margin-top: 2rem;
-          display: flex;
-          flex-direction: row;
-
-          .car-profil-user-fond {
-            position: relative;
-            background-color: #85d9ec; /* Couleur du cercle */
-            border-radius: 50%; /* Pour créer un cercle */
-            width: 350px; /* Largeur du cercle */
-            height: 100px; /* Hauteur du cercle */
+          height: 12vh;
+          .cart-content-text {
             display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-          .car-profil-user {
-            position: absolute;
-            object-fit: cover;
-            top: 0;
-            width: 200px;
-            height: 120px;
-          }
-        }
-        .cart-content-text {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          align-items: end;
-          font-size: 18px;
-          gap: 1rem;
-
-          li {
-            text-align: end;
-            width: 100%;
-            margin-top: 0.5rem;
-          }
-        }
-      }
-      .modyfy-user {
-        .modyfy-user-modal-inputs {
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-          .modyfy-input {
-            width: 70%;
-            margin: 0 auto;
-            border: 1px solid #10fffe;
-            background: black;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            display: flex;
-            img {
-              width: 20px;
+            flex-direction: column;
+            gap: 0;
+            li {
+              font-size: clamp(0.9rem, 2.5vw, 1.5rem);
             }
           }
-          button {
-            padding: 8px 12px;
-            color: #10fffe;
-            transition: ease-in-out 0.3s;
-          }
-          button:hover {
-            scale: 1.2;
-          }
-        }
-        .modyfy-user-modal-button {
-          position: absolute;
-          top: 80vh;
-          left: 50%;
-          transform: translateX(-50%);
         }
       }
     }
-  }
-  .add {
-    width: 100%;
-    margin-bottom: 1rem;
   }
 }
 
@@ -256,14 +179,13 @@
 
 .modify-delete-car {
   display: flex;
-  font-size: 20px;
+  font-size: clamp(0.7 rem, 2.5vw, 1.5rem);
 
   .modify-delete-car-content {
     width: 100%;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
-    gap: 10px;
+    gap: 0;
     margin: auto 0;
     div {
       display: grid;
@@ -271,6 +193,7 @@
       button {
         text-align: start;
         color: white;
+        font-size: clamp(0.8rem, 2.5vw, 1.9rem);
       }
     }
   }
@@ -278,44 +201,43 @@
     width: 100%;
     h1 {
       text-align: center;
-      font-size: clamp(0.9rem, 2vw, 1.5rem);
+      font-size: clamp(0.9rem, 2vw, 2rem);
       margin-block: 10px;
       color: red;
-      padding: 10px;
+      padding: 4px;
     }
     .delete-car-modal-content {
       width: 100%;
       display: flex;
-      // gap: 100px;
 
       .delete-car-modal-content-text {
         display: flex;
         flex-direction: column;
         gap: 3px;
-        margin-top: 16px;
+        width: 25vw;
+
         li {
-          font-size: clamp(0.7rem, 1.5vw, 1.5em);
+          font-size: clamp(0.8rem, 1.5vw, 1.5em);
         }
       }
       .buttons-content {
         margin-top: 15px;
         display: flex;
-        gap: 30px;
+        gap: 100px;
 
         button {
-          color: white;
+          color: black;
           padding: 16px;
           display: flex;
-          height: 38px;
+          height: 58px;
           justify-content: center;
           align-items: center;
-          border-radius: 20px;
-          background: var(--Color-3, #10fffe);
+          border-radius: 10px;
+          background: #10fffe;
           box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
           cursor: pointer;
-          font-weight: 600;
           transition: transform 0.3s ease;
-          font-size: 14px;
+          font-size: clamp(0.8rem, 2vw, 2em);
 
           &:hover {
             transform: scale(1.05);
@@ -329,278 +251,305 @@
     }
   }
 }
-@media screen and (min-width: 768px) {
-  .add-car-modal,
-  .modify-car-modal,
-  .modyfy-user-modal {
-    width: 40%;
-    max-width: 450px;
+@media screen and (max-width: 1500px) {
+  .profile {
+    .profile-garage {
+      height: 24vh;
+      .profile-garage-text {
+        .picture-car {
+          top: 9vh;
+        }
+        p,
+        h1 {
+          top: 35%;
+
+          font-size: clamp(1rem, 3vw, 2rem);
+        }
+      }
+    }
+
+    .df-row {
+      .card-profile {
+        .card-profile-header {
+          .card-profile-button-title {
+            h1 {
+              font-size: clamp(1rem, 3vw, 1.5rem);
+            }
+          }
+        }
+
+        .cart-content {
+          .cart-content-up {
+            .cart-content-text {
+              li {
+                font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+              }
+            }
+          }
+          .cart-content-down {
+            .cart-content-text {
+              li {
+                font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
-  .profile {
-    width: 100%;
-    height: 1100px;
-    background-image: url("../../assets/images/bckground.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    padding: 3rem;
-    gap: 1rem;
-    color: white;
+  .modify-delete-car {
+    font-size: clamp(0.7 rem, 2.5vw, 1.5rem);
 
-    .profile-garage {
-      background-image: url("../../assets/images/backgrounddesktop.png");
-      background-repeat: no-repeat;
-      background-size: contain;
-      width: 100%;
-      max-width: 770px;
-      height: 200px;
-
-      .profile-garage-text {
-        display: flex;
-        position: relative;
-
-        .picture-car {
-          position: relative;
-          top: 80px;
-          right: -60%;
-          height: 140px;
-          max-width: 290px;
-          background-image: url("../../assets/imagesvoitures/audi-e-tron-gt-476.png");
-          background-repeat: no-repeat;
-          background-size: contain;
+    .modify-delete-car-content {
+      div {
+        button {
+          font-size: clamp(0.8rem, 2.5vw, 1.2rem);
         }
-        .profile-garage-contain-title {
-          h1 {
-            position: absolute;
-            left: 5%;
-            width: 500px;
-            height: 40px;
-            font-family: sans-serif;
-            font-size: clamp(1rem, 5vw, 1.5rem);
+      }
+    }
+    .delete-car-modal {
+      h1 {
+        font-size: clamp(0.9rem, 2vw, 1.5rem);
+      }
+      .delete-car-modal-content {
+        .delete-car-modal-content-text {
+          li {
+            font-size: clamp(0.8rem, 1.5vw, 1.5em);
           }
-          p {
-            position: absolute;
-            top: 140px;
-            left: 5%;
-            width: 500px;
-            height: 50px;
-            font-family: sans-serif;
-            font-size: clamp(1rem, 5vw, 1.5rem);
+        }
+        .buttons-content {
+          button {
+            height: 48px;
           }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 1100px) {
+  .profile {
+    .profile-garage {
+      background-size: 75vw;
+
+      width: 75vw;
+      .profile-garage-text {
+        .picture-car {
+          top: 12vh;
+        }
+        p,
+        h1 {
+          top: 45%;
         }
       }
     }
     .df-row {
-      display: flex;
-      flex-wrap: wrap;
-      margin-inline: auto;
-      width: 770px;
-      height: 450px;
-
       .card-profile {
-        width: 370px;
-        max-height: 100%;
-        background-color: rgba(40, 49, 49, 1);
-        border-radius: 10px;
-        border: 1px solid #465454;
+        width: 75vw;
+        padding: 8px 8%;
+      }
+    }
+  }
+}
 
-        .card-profile-header {
-          height: 4vh;
-          display: flex;
-          justify-content: space-between;
-          .card-profile-button-title {
-            height: 100%;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            h1 {
-              color: white;
-              margin: auto 0;
-              font-size: clamp(1rem, 3vw, 2rem);
+@media screen and (max-width: 800px) {
+  .profile {
+    .profile-garage {
+      background-size: 75vw;
+
+      width: 75vw;
+      .profile-garage-text {
+        .picture-car {
+          top: 15vh;
+        }
+        p,
+        h1 {
+          top: 55%;
+        }
+      }
+    }
+    .df-row {
+      .card-profile {
+        width: 75vw;
+        padding: 8px 8%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .profile {
+    .profile-garage {
+      background-size: 85vw;
+
+      width: 85vw;
+    }
+    .df-row {
+      .card-profile {
+        width: 85vw;
+        padding: 8px 5%;
+      }
+    }
+    .delete-car-modal {
+      .delete-car-modal-content {
+        .delete-car-modal-content-text {
+          width: 35vw;
+        }
+        .buttons-content {
+          gap: 50px;
+
+          button {
+            height: 38px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 510px) {
+  .profile {
+    .profile-garage {
+      height: 18vh;
+      .profile-garage-text {
+        .picture-car {
+          top: 13vh;
+        }
+      }
+    }
+
+    .delete-car-modal {
+      .delete-car-modal-content {
+        .delete-car-modal-content-text {
+          width: 50vw;
+        }
+        .buttons-content {
+          gap: 10px;
+
+          button {
+            height: 30px;
+            padding: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 410px) {
+  .profile {
+    .profile-garage {
+      height: 15vh;
+      .profile-garage-text {
+        .picture-car {
+          top: 11vh;
+        }
+      }
+    }
+    .df-row {
+      .card-profile {
+        .cart-content {
+          .cart-content-up {
+            height: 14vh;
+
+            img {
+              height: 12vh;
+              width: 12vh;
             }
-            .card-profile-header-button {
-              img {
-                height: 110%;
+            .cart-content-text {
+              height: 13vh;
+
+              gap: 10px;
+
+              li {
+                font-size: 0.8rem;
               }
             }
           }
-          .card-profile-header-icons {
-            gap: 3px;
-            display: flex;
-            justify-content: end;
-            cursor: pointer;
-          }
-        }
-
-        .card-profile-line {
-          margin: 3px 0;
-          width: 100%;
-        }
-        .cart-content {
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          .car-picture {
-            height: 550px;
-          }
-          .cart-content-up {
-            margin-top: 1rem;
-            height: 100px;
-            display: flex;
-            flex-direction: row;
-            padding-left: 1rem;
-
-            .car-profil-user-fond {
-              position: relative;
-              background-color: #85d9ec; /* Couleur du cercle */
-              border-radius: 50%; /* Pour créer un cercle */
-              width: 550px; /* Largeur du cercle */
-              height: 150px; /* Hauteur du cercle */
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              margin-bottom: 5rem;
+          .cart-content-down {
+            .cart-content-text {
+              gap: 10px;
+              li {
+                font-size: 0.8rem;
+              }
             }
-            .car-profil-user {
-              position: absolute;
-              object-fit: contain;
-              top: 0;
-              width: 400px;
-              height: 150px;
+          }
+        }
+      }
+    }
+    .delete-car-modal {
+      .delete-car-modal-content {
+        .delete-car-modal-content-text {
+          width: 50vw;
+          li {
+            font-size: 0.7rem;
+          }
+        }
+        .buttons-content {
+          gap: 10px;
+
+          button {
+            height: 30px;
+            padding: 8px;
+          }
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 380px) {
+  .profile {
+    .profile-garage {
+      height: 15vh;
+      .profile-garage-text {
+        .picture-car {
+          top: 11vh;
+        }
+      }
+    }
+    .df-row {
+      .card-profile {
+        .cart-content {
+          .cart-content-up {
+            height: 14vh;
+
+            img {
+              height: 12vh;
+              width: 12vh;
+            }
+            .cart-content-text {
+              height: 13vh;
+
+              gap: 0px;
+
+              li {
+                font-size: 0.7rem;
+              }
             }
           }
           .cart-content-down {
-            height: 12vh;
-            display: flex;
-            flex-direction: row;
-            margin-bottom: 8rem;
-            margin-top: 5rem;
-            .car-profil-user-fond {
-              position: relative;
-              background-color: #85d9ec; /* Couleur du cercle */
-              border-radius: 50%; /* Pour créer un cercle */
-              width: 550px; /* Largeur du cercle */
-              height: 150px; /* Hauteur du cercle */
-              display: flex;
-              justify-content: center;
-              align-items: center;
+            .cart-content-text {
+              gap: 10px;
+              li {
+                font-size: 0.7rem;
+              }
             }
-            .car-profil-user {
-              position: absolute;
-              object-fit: cover;
-              top: 0;
-              width: 250px;
-              height: 150px;
-            }
-          }
-          .cart-content-text {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            font-size: clamp(0.5rem, 2vw, 1.4rem);
-          }
-        }
-        .modyfy-user {
-          .modyfy-user-modal-inputs {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            input {
-              width: 70%;
-              margin: 0 auto;
-              border: 1px solid #10fffe;
-              background: black;
-              color: white;
-              padding: 8px 12px;
-              border-radius: 8px;
-            }
-          }
-          .modyfy-user-modal-button {
-            position: absolute;
-            top: 80vh;
-            left: 50%;
-            transform: translateX(-50%);
           }
         }
       }
-      .add {
-        width: 770px;
-        min-height: 250px;
-      }
     }
+    .delete-car-modal {
+      .delete-car-modal-content {
+        .delete-car-modal-content-text {
+          width: 50vw;
+          li {
+            font-size: 0.7rem;
+          }
+        }
+        .buttons-content {
+          gap: 10px;
 
-    .add-car-section-form {
-      margin-block-start: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      height: 30vh;
-      border: 1px solid #10fffe;
-      border-radius: 8px;
-      margin: 130px 20px 100px 20px;
-      padding-inline: 10px;
-      h2 {
-        text-align: center;
-      }
-      .proposition {
-        color: white;
-
-        margin-left: 16px;
-        height: 18.5px;
-      }
-    }
-    .modify-delete-car {
-      height: 12vh;
-      display: flex;
-
-      .modify-delete-car-content {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin: auto 0;
-        div {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
           button {
-            text-align: start;
-            color: white;
-          }
-        }
-      }
-      .delete-car-modal {
-        width: 100%;
-        h1 {
-          text-align: center;
-          font-size: clamp(0.9rem, 2vw, 1.5rem);
-          margin-block: 10px;
-          color: red;
-        }
-        .delete-car-modal-content {
-          width: 100%;
-          display: flex;
-          gap: 100px;
-
-          .delete-car-modal-content-text {
-            display: flex;
-            flex-direction: column;
-            gap: 3px;
-            li {
-              font-size: clamp(0.7rem, 1.5vw, 1.2rem);
-            }
-          }
-          .buttons-content {
-            margin-top: 15px;
-            display: flex;
-            gap: 30px;
-            button {
-              padding: 24px;
-              font-size: 24px;
-            }
+            height: 30px;
+            padding: 8px;
           }
         }
       }
