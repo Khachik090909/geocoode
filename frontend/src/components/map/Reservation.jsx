@@ -186,7 +186,7 @@ function Reservation({ id, setId }) {
   };
   useEffect(() => {
     // Récupère les coordonnées de la station de recharge
-    if (station) {
+    if (station && userLocation) {
       const chargingStationsArray = [station];
       const waypoints = chargingStationsArray.map((station) => {
         return L.latLng(
