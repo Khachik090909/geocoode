@@ -55,8 +55,12 @@ function Reservation({ id, setId }) {
         { prise_type_autre: priseAutreMA },
       ]);
     }
-    calculateAge();
-    fetchReservationUser();
+    if (payload) {
+      calculateAge();
+    }
+    if (JSON.parse(localStorage.getItem("user"))) {
+      fetchReservationUser();
+    }
   }, []);
 
   useEffect(() => {
@@ -147,7 +151,7 @@ function Reservation({ id, setId }) {
 
   const handleValidation = async () => {
     reservationVerification();
-    if (isErrors.length === 0 && reservation.length === 0) {
+    if (isErrors.length === 0 && reservation.length === 0 && payload) {
       const dataPost = {
         charging_station_id: id,
         user_id: payload.id,
@@ -155,26 +159,22 @@ function Reservation({ id, setId }) {
         reservation_heure: selectedHour,
         amount_paid: price,
       };
-      try {
-        const response = await fetch(`${VITE_BACKEND_URL}/api/reservations`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(dataPost),
-        });
 
-        if (response.ok) {
-          setIsSubmit(true);
-          setTimeout(() => {
-            setId(0);
-          }, 2000);
-        } else {
-          console.error("Échec de la réservation !");
-        }
-      } catch (error) {
-        console.error(error);
+      const response = await fetch(`${VITE_BACKEND_URL}/api/reservations`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataPost),
+      });
+
+      if (response.ok) {
+        setIsSubmit(true);
+        setTimeout(() => {
+          setId(0);
+        }, 2000);
+      } else {
       }
     }
   };
@@ -316,8 +316,8 @@ function Reservation({ id, setId }) {
           </div>
         </div>
       )}
-      {isErrors.length && <Alert errors={isErrors} submit={null} />}
-      {isSubmit && <Alert errors={null} submit={isSubmit} />}
+      {isErrors.length > 0 && <Alert errors={isErrors} submit={false} />}
+      {isSubmit && <Alert errors={false} submit={isSubmit} />}
     </div>
   );
 }

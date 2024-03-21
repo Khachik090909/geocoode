@@ -9,6 +9,7 @@ function ModyfyUser({ setModal, userData }) {
   const navigate = useNavigate();
   const { VITE_BACKEND_URL } = import.meta.env;
   const data = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const [changePassword, setChangePassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState([]);
   const [showPassword, setShowPassword] = useState({
@@ -62,27 +63,24 @@ function ModyfyUser({ setModal, userData }) {
       alert("Le mot de passe doit contenir au moins 8 caractères");
       return;
     }
-    try {
-      const response = await fetch(
-        `${VITE_BACKEND_URL}/api/loggedusers/${data.id}`,
-        {
-          method: "PUT",
+    const response = await fetch(
+      `${VITE_BACKEND_URL}/api/loggedusers/${data.id}`,
+      {
+        method: "PUT",
 
-          headers: {
-            "Content-Type": "application/json", // Spécifier le type de contenu JSON
-          },
-          body: JSON.stringify(newData), // Convertir l'objet dataUpdate en chaîne JSON
-        }
-      );
-      if (response.status === 401) {
-        alert("Le mot de passe actuel est incorrect.");
-        return;
+        headers: {
+          "Content-Type": "application/json", // Spécifier le type de contenu JSON
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newData), // Convertir l'objet dataUpdate en chaîne JSON
       }
-    } catch (error) {
-      if (error) {
-        console.error(error);
-      }
+    );
+
+    if (response.status === 401) {
+      alert("Le mot de passe actuel est incorrect.");
+      return;
     }
+
     setModal(false);
     navigate("/profile");
   };

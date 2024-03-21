@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+
 import "./alert.scss";
 
 function Alert({ errors, submit }) {
@@ -63,7 +63,6 @@ function Alert({ errors, submit }) {
                   <strong className="font__weight-semibold"> Oops !</strong>{" "}
                   Modifiez et réessayez. <br />
                   {errors &&
-                    errors.length > 0 &&
                     errors.map((type) => (
                       <p key={type.field}>
                         {type.field}: {type.message}
@@ -80,15 +79,3 @@ function Alert({ errors, submit }) {
 }
 
 export default Alert;
-Alert.defaultProps = {
-  errors: [],
-};
-Alert.propTypes = {
-  errors: PropTypes.arrayOf(
-    PropTypes.shape({
-      field: PropTypes.string,
-      message: PropTypes.string,
-    })
-  ),
-  submit: PropTypes.bool.isRequired,
-};

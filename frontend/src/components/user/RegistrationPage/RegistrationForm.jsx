@@ -7,7 +7,7 @@ import show from "../../../assets/show.svg";
 
 function RegistrationForm({ setIsSignupModal }) {
   const { VITE_BACKEND_URL } = import.meta.env;
-  const [isErrors, setIsErrors] = useState(null);
+  const [isErrors, setIsErrors] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -32,46 +32,43 @@ function RegistrationForm({ setIsSignupModal }) {
   }, []);
   const formPostData = async () => {
     // Vérifier si le mot de passe et la confirmation du mot de passe sont identiques
-    try {
-      const response = await fetch(`${VITE_BACKEND_URL}/api/users/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
 
-      if (!response.ok) {
-        if (response.status === 400) {
-          setIsErrors([
-            {
-              message: "L'email existe déjà.",
-              field: "email",
-            },
-          ]);
-        }
-        const dataresponse = await response.json();
-        console.log(dataresponse);
-        if (dataresponse.validationErrors.length > 0) {
-          setIsErrors(dataresponse.validationErrors);
-        }
-        throw new Error("Erreur lors de l'inscription");
-      } else {
-        setIsErrors(null);
-        setIsSubmit(true);
-        setTimeout(() => {
-          setIsSignupModal(false);
-        }, 2000);
+    const response = await fetch(`${VITE_BACKEND_URL}/api/users/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      if (response.status === 400) {
+        setIsErrors([
+          {
+            message: "L'email existe déjà.",
+            field: "email",
+          },
+        ]);
       }
-    } catch (error) {
-      console.error(error);
+      const dataresponse = await response.json();
+
+      if (dataresponse.validationErrors.length > 0) {
+        setIsErrors(dataresponse.validationErrors);
+      }
+    } else {
+      setIsSubmit(true);
+      setTimeout(() => {
+        setIsSignupModal(false);
+      }, 2000);
     }
 
     return;
   };
   return (
     <div className="background-modal">
-      {(isErrors || isSubmit) && <Alert errors={isErrors} submit={isSubmit} />}
+      {(isErrors.length || isSubmit) && (
+        <Alert errors={isErrors} submit={isSubmit} />
+      )}
       <div className="background-modal-content">
         <button
           type="button"

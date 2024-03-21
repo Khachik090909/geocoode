@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
+
 import croix from "../../../assets/croix.svg";
 
 function AddCar({ state, dataProps }) {
@@ -28,20 +28,15 @@ function AddCar({ state, dataProps }) {
 
   useEffect(() => {
     const fetchBrands = async () => {
-      try {
-        const [brandsResponse, plugsResponse] = await Promise.all([
-          fetch(`${VITE_BACKEND_URL}/api/brands`),
-          fetch(`${VITE_BACKEND_URL}/api/plugs`),
-        ]);
+      const [brandsResponse, plugsResponse] = await Promise.all([
+        fetch(`${VITE_BACKEND_URL}/api/brands`),
+        fetch(`${VITE_BACKEND_URL}/api/plugs`),
+      ]);
 
-        const brandsData = await brandsResponse.json();
-        setDataBrands(brandsData);
-        const plugsData = await plugsResponse.json();
-        setDataPlugs(plugsData);
-        return null;
-      } catch (error) {
-        console.error(error);
-      }
+      const brandsData = await brandsResponse.json();
+      setDataBrands(brandsData);
+      const plugsData = await plugsResponse.json();
+      setDataPlugs(plugsData);
       return null;
     };
     fetchBrands();
@@ -50,40 +45,34 @@ function AddCar({ state, dataProps }) {
   const handlePostCar = async () => {
     if (data) {
       if (dataProps) {
-        try {
-          const response = await fetch(
-            `${VITE_BACKEND_URL}/api/cars/${dataProps.id}`,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json", // Spécifier le type de contenu JSON
-              },
-              body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
-            }
-          );
-          if (!response.ok) {
-            await response.json();
-          }
-        } catch (error) {
-          console.error(error);
-        }
-        state(false);
-        navigate("/profile");
-      } else {
-        try {
-          const response = await fetch(`${VITE_BACKEND_URL}/api/cars`, {
-            method: "POST",
+        const response = await fetch(
+          `${VITE_BACKEND_URL}/api/cars/${dataProps.id}`,
+          {
+            method: "PUT",
             headers: {
               "Content-Type": "application/json", // Spécifier le type de contenu JSON
             },
             body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
-          });
-          if (!response.ok) {
-            await response.json();
           }
-        } catch (error) {
-          console.error(error);
+        );
+        if (!response.ok) {
+          await response.json();
         }
+
+        state(false);
+        navigate("/profile");
+      } else {
+        const response = await fetch(`${VITE_BACKEND_URL}/api/cars`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json", // Spécifier le type de contenu JSON
+          },
+          body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
+        });
+        if (!response.ok) {
+          await response.json();
+        }
+
         state(false);
         navigate("/profile");
       }
@@ -219,13 +208,4 @@ function AddCar({ state, dataProps }) {
   );
 }
 
-AddCar.propTypes = {
-  state: PropTypes.func.isRequired,
-  dataProps: PropTypes.shape({
-    Marque: PropTypes.string.isRequired,
-    model: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-  }).isRequired,
-};
 export default AddCar;

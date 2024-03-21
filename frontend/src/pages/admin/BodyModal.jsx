@@ -88,58 +88,50 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
     await fetchDataUsers();
   };
   const deletedata = async (id) => {
-    try {
-      const response = await fetch(
-        `${VITE_BACKEND_URL}/api/${route.route}/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response);
-      if (!response.ok) {
-        const dataresponse = await response.json();
-        if (dataresponse.validationErrors.length > 0) {
-          setIsErrors(dataresponse.validationErrors);
-        }
-        throw new Error("Erreur lors de l'inscription");
-      } else {
-        setIsErrors(null);
-        setIsSubmit(true);
+    const response = await fetch(
+      `${VITE_BACKEND_URL}/api/${route.route}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
       }
-    } catch (error) {
-      console.error(error);
+    );
+
+    if (!response.ok) {
+      const dataresponse = await response.json();
+      if (dataresponse.validationErrors.length > 0) {
+        setIsErrors(dataresponse.validationErrors);
+      }
+      throw new Error("Erreur lors de l'inscription");
+    } else {
+      setIsErrors(null);
+      setIsSubmit(true);
     }
   };
   const putData = async (data) => {
-    try {
-      const response = await fetch(
-        `${VITE_BACKEND_URL}/api/${route.route}/${data.id}/admin`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        }
-      );
-      console.log(response);
-      if (!response.ok) {
-        const dataresponse = await response.json();
-        if (dataresponse.validationErrors.length > 0) {
-          setIsErrors(dataresponse.validationErrors);
-        }
-        throw new Error("Erreur lors de l'inscription");
-      } else {
-        setIsErrors(null);
-        setIsSubmit(true);
+    const response = await fetch(
+      `${VITE_BACKEND_URL}/api/${route.route}/${data.id}/admin`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
       }
-    } catch (error) {
-      console.error(error);
+    );
+
+    if (!response.ok) {
+      const dataresponse = await response.json();
+      if (dataresponse.validationErrors.length > 0) {
+        setIsErrors(dataresponse.validationErrors);
+      }
+      throw new Error("Erreur lors de l'inscription");
+    } else {
+      setIsErrors(null);
+      setIsSubmit(true);
     }
   };
   return (
@@ -174,7 +166,9 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
                     indexX == detectInput.indexX &&
                     indexY == detectInput.indexY
                       ? modifValue
-                      : value[1]
+                      : value[1] !== null
+                        ? value[1]
+                        : "null"
                   }
                   style={
                     inputModif.some(

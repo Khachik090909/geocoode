@@ -13,8 +13,7 @@ function LoginPage() {
   const { VITE_BACKEND_URL } = import.meta.env;
   const { auth, setAuth } = useCurrentUserContext();
   const navigate = useNavigate();
-  const [isErrors, setIsErrors] = useState(null);
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isErrors, setIsErrors] = useState([]);
   const [isSignupModal, setIsSignupModal] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [data, setData] = useState({
@@ -24,6 +23,7 @@ function LoginPage() {
 
   const formPostData = async () => {
     try {
+      setIsErrors([]);
       const response = await fetch(`${VITE_BACKEND_URL}/api/users/login`, {
         method: "POST",
         headers: {
@@ -50,15 +50,23 @@ function LoginPage() {
         }
       } else {
         if (user.validationErrors.length > 0) {
-          setIsErrors(user.validationErrors);
-          setIsSubmit(true);
+          setIsErrors((isErrors) => [
+            ...isErrors,
+            {
+              message: "Erreur lors de la connexion",
+              field: "server",
+            },
+          ]);
         }
-        throw new Error("Erreur lors de la connexion");
       }
     } catch (error) {
-      console.error("error", error);
-      setIsErrors({ field: "server", message: "Erreur de serveur" });
-      setIsSubmit(true);
+      setIsErrors((isErrors) => [
+        ...isErrors,
+        {
+          message: "Erreur lors de server",
+          field: "server",
+        },
+      ]);
     }
   };
 
@@ -107,11 +115,8 @@ function LoginPage() {
         >
           S'inscrire
         </button>
-        <div className="pos-relative">
-          {isErrors && isSubmit && (
-            <Alert errors={isErrors} submit={isSubmit} />
-          )}
-        </div>
+
+        {isErrors.length > 0 && <Alert errors={isErrors} submit={false} />}
       </div>
 
       {isSignupModal && (

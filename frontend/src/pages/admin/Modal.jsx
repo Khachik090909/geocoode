@@ -18,7 +18,6 @@ function Modal(route) {
     const otherEntries = [];
     const key = Object.keys(sort);
     const value = Object.values(sort);
-    console.log(key, value);
     if (!isNaN(value)) {
       for (let i = 0; i < data.length; i++) {
         if (data[i][key] == value) {

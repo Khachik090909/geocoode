@@ -9,6 +9,8 @@ function CardPlug() {
   const [show, setShow] = useState(false);
   const [reservation, setReservation] = useState([]);
   const [onClick, setOnClick] = useState(false);
+  const { VITE_BACKEND_URL } = import.meta.env;
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchReservationUser = async () => {
       if (!localStorage.getItem("user")) {
@@ -23,7 +25,7 @@ function CardPlug() {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -43,27 +45,17 @@ function CardPlug() {
   }, [onClick]);
 
   const handlerdeleteReservation = async () => {
+    const { id } = reservation[0];
+    const data = reservation[0];
+    await fetch(`${VITE_BACKEND_URL}/api/reservations/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
     setOnClick(!onClick);
-    if (reservation.length) {
-      try {
-        const { id } = reservation[0];
-        const response = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}/api/reservations/${id}`,
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify(reservation[0]),
-          }
-        );
-        await response.json();
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    window.location.reload();
   };
   return (
     <div className={show ? "card-profile-show card-profile" : "card-profile"}>

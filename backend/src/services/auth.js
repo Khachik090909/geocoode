@@ -122,20 +122,12 @@ const verifyPasswordActual = async (req, res, next) => {
   );
   const Password = rows[0].hashed_password;
 
-  try {
-    const reponse = await argon2.verify(Password, passwordActuel);
-
-    if (!reponse) {
-      return res.status(401).send("Le mot de passe actuel est incorrect.");
-    }
-    delete req.body.passwordActuel;
-    next();
-  } catch (error) {
-    console.error(
-      "Erreur lors de la vérification du mot de passe actuel :",
-      error
-    );
+  const reponse = await argon2.verify(Password, passwordActuel);
+  if (!reponse) {
+    return res.status(401).send("Le mot de passe actuel est incorrect.");
   }
+  delete req.body.passwordActuel;
+  next();
   return null;
 };
 const missingElements = async (req, res, next) => {

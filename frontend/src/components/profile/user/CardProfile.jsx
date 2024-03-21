@@ -19,22 +19,19 @@ function CardProfile() {
       const { id } = JSON.parse(localStorage.getItem("user"));
       const token = localStorage.getItem("token");
 
-      try {
-        const response = await fetch(`${VITE_BACKEND_URL}/api/users/${id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
+      const response = await fetch(`${VITE_BACKEND_URL}/api/users/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
 
-        if (!data) {
-          return null;
-        }
-        setUserData(data);
-      } catch (error) {
-        console.error(error);
+      if (!data) {
+        return null;
       }
+      setUserData(data);
+
       return null;
     };
     fetchUser();

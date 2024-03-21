@@ -38,39 +38,35 @@ function Map() {
 
   // Fonction pour récupérer les stations de recharge depuis le backend
   const fetchChargingStations = useCallback(async () => {
-    try {
-      const response = await fetch(
-        `${VITE_BACKEND_URL}/api/charging-stations-positions`
-      );
-      const data = await response.json();
+    const response = await fetch(
+      `${VITE_BACKEND_URL}/api/charging-stations-positions`
+    );
+    const data = await response.json();
 
-      // Traitement des données garder 6 chiffres après la virgule
-      const processedData = data.map((station) => {
-        const latitude = parseFloat(station.consolidated_latitude).toFixed(6);
-        const longitude = parseFloat(station.consolidated_longitude).toFixed(6);
+    // Traitement des données garder 6 chiffres après la virgule
+    const processedData = data.map((station) => {
+      const latitude = parseFloat(station.consolidated_latitude).toFixed(6);
+      const longitude = parseFloat(station.consolidated_longitude).toFixed(6);
 
-        return {
-          ...station,
-          consolidated_latitude: latitude,
-          consolidated_longitude: longitude,
-        };
-      });
+      return {
+        ...station,
+        consolidated_latitude: latitude,
+        consolidated_longitude: longitude,
+      };
+    });
 
-      // Supprimer les doublons
-      const uniqueData = processedData.filter(
-        (station, index, self) =>
-          index ===
-          self.findIndex(
-            (s) =>
-              s.consolidated_latitude === station.consolidated_latitude &&
-              s.consolidated_longitude === station.consolidated_longitude
-          )
-      );
+    // Supprimer les doublons
+    const uniqueData = processedData.filter(
+      (station, index, self) =>
+        index ===
+        self.findIndex(
+          (s) =>
+            s.consolidated_latitude === station.consolidated_latitude &&
+            s.consolidated_longitude === station.consolidated_longitude
+        )
+    );
 
-      setChargingStations(uniqueData);
-    } catch (error) {
-      console.error(error);
-    }
+    setChargingStations(uniqueData);
   }, []);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ function ContactPage({ setOpenContact }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [isErrors, setIsErrors] = useState(null);
   const [isSubmit, setIsSubmit] = useState(false);
+  const [subject, setSubject] = useState("");
   const { VITE_BACKEND_URL } = import.meta.env;
   const [data, setData] = useState({
     name: user ? user.firstname + " " + user.name : "",
@@ -18,29 +19,29 @@ function ContactPage({ setOpenContact }) {
       behavior: "smooth",
     });
   }, []);
+  const handleChange = (e) => {
+    setSubject(e.target.value);
+    setData({ ...data, subject: e.target.value });
+  };
   const handleSubmit = async () => {
     const token = localStorage.getItem("token");
-    try {
-      const response = await fetch(`${VITE_BACKEND_URL}/api/contacts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        const dataresponse = await response.json();
-        if (dataresponse.validationErrors.length > 0) {
-          setIsErrors(dataresponse.validationErrors);
-        }
-        throw new Error("Erreur lors de l'inscription");
-      } else {
-        setIsErrors(null);
-        setIsSubmit(true);
+
+    const response = await fetch(`${VITE_BACKEND_URL}/api/contacts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      const dataresponse = await response.json();
+      if (dataresponse.validationErrors.length > 0) {
+        setIsErrors(dataresponse.validationErrors);
       }
-    } catch (error) {
-      console.error(error);
+    } else {
+      setIsErrors(null);
+      setIsSubmit(true);
     }
   };
   return (
@@ -86,8 +87,8 @@ function ContactPage({ setOpenContact }) {
             type="textArea"
             name="subject"
             placeholder="Sujet de la demande"
-            value={data.subject}
-            onChange={(e) => setData({ ...data, subject: e.target.value })}
+            value={subject}
+            onChange={handleChange}
           />
         </div>
 
