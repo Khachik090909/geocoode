@@ -22,22 +22,19 @@ function CardCar() {
       const { id } = JSON.parse(localStorage.getItem("user"));
       const token = localStorage.getItem("token");
 
-      try {
-        const response = await fetch(`${VITE_BACKEND_URL}/api/users/${id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await response.json();
+      const response = await fetch(`${VITE_BACKEND_URL}/api/users/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const data = await response.json();
 
-        if (!data) {
-          return null;
-        }
-        setDataUser(data.number_vehicles);
-      } catch (error) {
-        console.error(error);
+      if (!data) {
+        return null;
       }
+      setDataUser(data.number_vehicles);
+
       return null;
     };
     fetchUser();
@@ -70,55 +67,63 @@ function CardCar() {
         </button>
       </div>
       <img className="card-profile-line" src={line} alt="line" />
-      {dataCars.length
-        ? !modifyCar && (
-            <div className="cart-content">
-              <div className="cart-content-up">
-                <img className="car-profil-user" src={carImag} alt="profile" />
-                <ul className="cart-content-text">
-                  <li>Marque: {dataCars[0].Marque}</li>
-                  <li>Modèle: {dataCars[0].model}</li>
-                  <li>Type de prise: {dataCars[0].type}</li>
-                </ul>
-              </div>
-              {show &&
-                dataCars.map(
-                  (car, index) =>
-                    index > 0 && (
-                      <>
-                        <img
-                          className="card-profile-line"
-                          src={line}
-                          alt="line"
-                        />
-                        <div key={car.model} className="cart-content-up ">
-                          <img
-                            className="car-profil-user"
-                            src={carImag}
-                            alt="profile"
-                          />
-
-                          <ul className="cart-content-text">
-                            <li>Marque: {car.Marque}</li>
-                            <li>Modèle: {car.model}</li>
-                            <li>Type de prise: {car.type}</li>
-                          </ul>
-                        </div>
-                      </>
-                    )
-                )}
-              {show && dataCars.length < dataUser && (
-                <div className="cart-content-down">
-                  <button type="button" onClick={() => setModalCar(true)}>
-                    <div className="cart-content-up car-picture">
-                      <img src={addCar} alt="add car" />
-                    </div>
-                  </button>
-                </div>
-              )}
+      {dataCars.length ? (
+        !modifyCar && (
+          <div className="cart-content">
+            <div className="cart-content-up">
+              <img className="car-profil-user" src={carImag} alt="profile" />
+              <ul className="cart-content-text">
+                <li>Marque: {dataCars[0].Marque}</li>
+                <li>Modèle: {dataCars[0].model}</li>
+                <li>Type de prise: {dataCars[0].type}</li>
+              </ul>
             </div>
-          )
-        : ""}
+            {show &&
+              dataCars.map(
+                (car, index) =>
+                  index > 0 && (
+                    <>
+                      <img
+                        className="card-profile-line"
+                        src={line}
+                        alt="line"
+                      />
+                      <div key={car.model} className="cart-content-up ">
+                        <img
+                          className="car-profil-user"
+                          src={carImag}
+                          alt="profile"
+                        />
+
+                        <ul className="cart-content-text">
+                          <li>Marque: {car.Marque}</li>
+                          <li>Modèle: {car.model}</li>
+                          <li>Type de prise: {car.type}</li>
+                        </ul>
+                      </div>
+                    </>
+                  )
+              )}
+            {show && dataCars.length < dataUser && (
+              <div className="cart-content-down">
+                <button type="button" onClick={() => setModalCar(true)}>
+                  <div className="cart-content-up car-picture">
+                    <img src={addCar} alt="add car" />
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
+        )
+      ) : (
+        <div className="cart-content-down">
+          <button type="button" onClick={() => setModalCar(true)}>
+            <div className="cart-content-up car-picture">
+              <img src={addCar} alt="add car" />
+            </div>
+          </button>
+        </div>
+      )}
       {modalCar && <AddCar state={setModalCar} dataProps={null} />}
       {modifyCar && <ModifyCar />}
     </div>

@@ -6,6 +6,7 @@ import AddCar from "./AddCar";
 function ModifyCar() {
   const [dataModifyCar, setDataModifyCar] = useState();
   const [dataDeleteCar, setDataDeleteCar] = useState();
+  const token = localStorage.getItem("token");
   const dataCars = useLoaderData();
   const navigate = useNavigate();
   useEffect(() => {
@@ -21,25 +22,21 @@ function ModifyCar() {
     setDataDeleteCar(dataCars[index]);
   };
   const handlerDeleteCar = async () => {
-    try {
-      const { id } = dataDeleteCar;
-      const response = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify(dataDeleteCar),
-        }
-      );
-      await response.json();
+    const { id } = dataDeleteCar;
+    const response = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(dataDeleteCar),
+      }
+    );
 
-      setDataDeleteCar(null);
-    } catch (error) {
-      console.error(error);
-    }
+    setDataDeleteCar(null);
+
     setDataDeleteCar(null);
     navigate("/profile");
   };
