@@ -7,17 +7,23 @@ function Modal(route) {
   const [dataLoad, setDataLoad] = useState([]);
   const [dataLenght, setDataLenght] = useState();
   const [sort, setSort] = useState();
+  const [sortValue, setSortValue] = useState();
   const [limit, setLimit] = useState();
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");
   const { VITE_BACKEND_URL } = import.meta.env;
   const { id } = JSON.parse(localStorage.getItem("user"));
 
+  const handlerSort = (e, key) => {
+    setSort({ [key]: e.target.value });
+    setSortValue(e.target.value);
+  };
   const sortData = (data, sort) => {
     const specificNameEntries = [];
     const otherEntries = [];
     const key = Object.keys(sort);
     const value = Object.values(sort);
+
     if (!isNaN(value)) {
       for (let i = 0; i < data.length; i++) {
         if (data[i][key] == value) {
@@ -90,9 +96,12 @@ function Modal(route) {
                 className={`admin-information-input-sort admin-information-input-${key}`}
                 key={key}
                 placeholder={key}
-                value={sort ? sort[key] : ""}
-                onChange={(e) => setSort({ [key]: e.target.value })}
-                onClick={() => setSort()}
+                value={sortValue ? sortValue : ""}
+                onChange={(e) => handlerSort(e, key)}
+                onClick={() => {
+                  setSort();
+                  setSortValue();
+                }}
               />
             ))}
           </header>
