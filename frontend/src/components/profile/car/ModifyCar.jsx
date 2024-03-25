@@ -6,6 +6,7 @@ import AddCar from "./AddCar";
 function ModifyCar() {
   const [dataModifyCar, setDataModifyCar] = useState();
   const [dataDeleteCar, setDataDeleteCar] = useState();
+  const [cordoneClick, setCordoneClick] = useState("");
   const dataCars = useLoaderData();
   const navigate = useNavigate();
   useEffect(() => {
@@ -14,10 +15,19 @@ function ModifyCar() {
       behavior: "smooth",
     });
   }, []);
+  useEffect(() => {
+    if (cordoneClick) {
+      window.scrollTo({
+        top: cordoneClick,
+        behavior: "smooth",
+      });
+    }
+  }, [cordoneClick]);
   const handlerClickModify = (index) => {
     setDataModifyCar(dataCars[index]);
   };
-  const handlerClickDelete = (index) => {
+  const handlerClickDelete = (index, e) => {
+    setCordoneClick(e.pageY);
     setDataDeleteCar(dataCars[index]);
   };
   const handlerDeleteCar = async () => {
@@ -52,7 +62,10 @@ function ModifyCar() {
               <button type="button" onClick={() => handlerClickModify(index)}>
                 Modifier: {car.Marque}
               </button>
-              <button type="button" onClick={() => handlerClickDelete(index)}>
+              <button
+                type="button"
+                onClick={(e) => handlerClickDelete(index, e)}
+              >
                 Supprimer: {car.Marque}
               </button>
             </div>

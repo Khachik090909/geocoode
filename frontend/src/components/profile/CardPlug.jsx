@@ -9,6 +9,7 @@ function CardPlug() {
   const [show, setShow] = useState(false);
   const [reservation, setReservation] = useState([]);
   const [onClick, setOnClick] = useState(false);
+  const [cordoneClick, setCordoneClick] = useState("");
   useEffect(() => {
     const fetchReservationUser = async () => {
       if (!localStorage.getItem("user")) {
@@ -65,6 +66,14 @@ function CardPlug() {
     }
     window.location.reload();
   };
+  useEffect(() => {
+    if (cordoneClick) {
+      window.scrollTo({
+        top: cordoneClick,
+        behavior: "smooth",
+      });
+    }
+  }, [cordoneClick]);
   return (
     <div className={show ? "card-profile-show card-profile" : "card-profile"}>
       <div className="card-profile-header">
@@ -72,7 +81,10 @@ function CardPlug() {
           <button
             type="button"
             className="card-profile-header-button"
-            onClick={() => reservation.length > 0 && setShow(!show)}
+            onClick={(e) => {
+              reservation.length > 0 && setShow(!show);
+              setCordoneClick(e.pageY);
+            }}
           >
             {show ? (
               <img src={flachHaute} alt="flach" />
