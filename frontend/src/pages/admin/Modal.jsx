@@ -24,7 +24,7 @@ function Modal(route) {
     const key = Object.keys(sort);
     const value = Object.values(sort);
 
-    if (!isNaN(value)) {
+    if (!isNaN(data[0][key])) {
       for (let i = 0; i < data.length; i++) {
         if (data[i][key] == value) {
           specificNameEntries.push(data[i]);
@@ -81,8 +81,10 @@ function Modal(route) {
   }, [limit, data, sort]);
   useEffect(() => {
     setSort();
+    setSortValue();
     fetchDataUsers();
   }, [route]);
+
   return (
     <>
       {dataLoad.length > 0 && dataLoad.length < 21 && (
@@ -96,7 +98,7 @@ function Modal(route) {
                 className={`admin-information-input-sort admin-information-input-${key}`}
                 key={key}
                 placeholder={key}
-                value={sortValue ? sortValue : ""}
+                value={sortValue && Object.keys(sort) == key ? sortValue : ""}
                 onChange={(e) => handlerSort(e, key)}
                 onClick={() => {
                   setSort();

@@ -15,6 +15,7 @@ function CardCar() {
   const [show, setShow] = useState(false);
   const [modifyCar, setModifyCar] = useState(false);
   const [dataUser, setDataUser] = useState();
+  const [cordoneClick, setCordoneClick] = useState("");
   const dataCars = useLoaderData();
   useEffect(() => {
     const fetchUser = async () => {
@@ -39,6 +40,14 @@ function CardCar() {
     };
     fetchUser();
   }, []);
+  useEffect(() => {
+    if (cordoneClick) {
+      window.scrollTo({
+        top: cordoneClick,
+        behavior: "smooth",
+      });
+    }
+  }, [cordoneClick]);
   return (
     <div
       className={
@@ -50,7 +59,10 @@ function CardCar() {
           <button
             type="button"
             className="card-profile-header-button"
-            onClick={() => setShow(!show)}
+            onClick={(e) => {
+              setShow(!show);
+              setCordoneClick(e.pageY);
+            }}
           >
             {show ? (
               <img src={flachHaute} alt="flach" />

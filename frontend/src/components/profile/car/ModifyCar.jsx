@@ -6,6 +6,7 @@ import AddCar from "./AddCar";
 function ModifyCar() {
   const [dataModifyCar, setDataModifyCar] = useState();
   const [dataDeleteCar, setDataDeleteCar] = useState();
+  const [cordoneClick, setCordoneClick] = useState("");
   const token = localStorage.getItem("token");
   const dataCars = useLoaderData();
   const navigate = useNavigate();
@@ -18,28 +19,34 @@ function ModifyCar() {
   const handlerClickModify = (index) => {
     setDataModifyCar(dataCars[index]);
   };
-  const handlerClickDelete = (index) => {
+  const handlerClickDelete = (index, e) => {
+    setCordoneClick(e.pageY);
     setDataDeleteCar(dataCars[index]);
   };
   const handlerDeleteCar = async () => {
     const { id } = dataDeleteCar;
-    const response = await fetch(
-      `${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(dataDeleteCar),
-      }
-    );
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/cars/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(dataDeleteCar),
+    });
 
     setDataDeleteCar(null);
 
     setDataDeleteCar(null);
     navigate("/profile");
   };
+  useEffect(() => {
+    if (cordoneClick) {
+      window.scrollTo({
+        top: cordoneClick,
+        behavior: "smooth",
+      });
+    }
+  }, [cordoneClick]);
   return (
     <div className="modify-delete-car">
       {dataCars.length > 0 && !dataDeleteCar && (
@@ -49,7 +56,10 @@ function ModifyCar() {
               <button type="button" onClick={() => handlerClickModify(index)}>
                 Modifier: {car.Marque}
               </button>
-              <button type="button" onClick={() => handlerClickDelete(index)}>
+              <button
+                type="button"
+                onClick={(e) => handlerClickDelete(index, e)}
+              >
                 Supprimer: {car.Marque}
               </button>
             </div>

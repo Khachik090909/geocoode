@@ -66,9 +66,8 @@ function RegistrationForm({ setIsSignupModal }) {
   };
   return (
     <div className="background-modal">
-      {(isErrors.length || isSubmit) && (
-        <Alert errors={isErrors} submit={isSubmit} />
-      )}
+      {isErrors.length && <Alert errors={isErrors} submit={""} />}
+      {isSubmit && <Alert errors={""} submit={isSubmit} />}
       <div className="background-modal-content">
         <button
           type="button"

@@ -12,6 +12,7 @@ function CardProfile() {
   const [userData, setUserData] = useState({});
   const [age, setAge] = useState(null);
   const [genderFr, setGenderFr] = useState({});
+  const [cordoneClick, setCordoneClick] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -68,7 +69,18 @@ function CardProfile() {
 
     calculateAge();
   }, [userData.date_of_birth]);
-
+  const handlerClick = (e) => {
+    setShow(!show);
+    setCordoneClick(e.pageX);
+  };
+  useEffect(() => {
+    if (cordoneClick) {
+      window.scrollTo({
+        top: cordoneClick,
+        behavior: "smooth",
+      });
+    }
+  }, [cordoneClick]);
   return (
     <div className={show ? "card-profile-show card-profile" : "card-profile"}>
       <div className="card-profile-header">
@@ -76,7 +88,7 @@ function CardProfile() {
           <button
             type="button"
             className="card-profile-header-button"
-            onClick={() => setShow(!show)}
+            onClick={(e) => handlerClick(e)}
           >
             {show ? (
               <img src={flachHaute} alt="flach" />
