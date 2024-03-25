@@ -55,8 +55,12 @@ function Reservation({ id, setId }) {
         { prise_type_autre: priseAutreMA },
       ]);
     }
-    calculateAge();
-    fetchReservationUser();
+    if (payload) {
+      calculateAge();
+    }
+    if (localStorage.getItem("user")) {
+      fetchReservationUser();
+    }
   }, []);
 
   useEffect(() => {

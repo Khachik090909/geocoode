@@ -11,7 +11,7 @@ class contactManager extends AbstractManager {
 
   async readAllContactStatistic() {
     const [rows] = await this.database.query(
-      `select id from ${this.table} WHERE answer =''`
+      `select id from ${this.table} WHERE answer ='' OR answer IS NULL`
     );
     return rows;
   }
