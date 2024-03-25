@@ -43,6 +43,7 @@ function CardCar() {
     };
     fetchUser();
   }, []);
+  // scroll to start  of page
   useEffect(() => {
     if (cordoneClick) {
       window.scrollTo({

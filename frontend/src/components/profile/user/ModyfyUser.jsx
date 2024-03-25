@@ -24,6 +24,7 @@ function ModyfyUser({ setModal, userData }) {
     passwordActuel: "",
     password: "",
   });
+  // scroll to start  of page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -40,6 +41,7 @@ function ModyfyUser({ setModal, userData }) {
       setNewData({ ...newData, number_vehicles: 0 });
     }
   };
+  //fill out a new passport with the old passport, if the customer does not want, modify their pass
   useEffect(() => {
     setNewData({
       ...newData,
@@ -69,9 +71,9 @@ function ModyfyUser({ setModal, userData }) {
           method: "PUT",
 
           headers: {
-            "Content-Type": "application/json", // Spécifier le type de contenu JSON
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(newData), // Convertir l'objet dataUpdate en chaîne JSON
+          body: JSON.stringify(newData),
         }
       );
       if (response.status === 401) {
@@ -84,6 +86,7 @@ function ModyfyUser({ setModal, userData }) {
       }
     }
     setModal(false);
+    // restart user data
     navigate("/profile");
   };
 

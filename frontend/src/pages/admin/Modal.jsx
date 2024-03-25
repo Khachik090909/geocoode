@@ -12,14 +12,14 @@ function Modal(route) {
   const token = localStorage.getItem("token");
   const { VITE_BACKEND_URL } = import.meta.env;
   const { id } = JSON.parse(localStorage.getItem("user"));
-
+  // sort the chosen tights. Separate sorted items and put at the beginning
   const sortData = (data, sort) => {
     const specificNameEntries = [];
     const otherEntries = [];
     const key = Object.keys(sort);
     const value = Object.values(sort);
-    console.log(key, value);
-    if (!isNaN(value)) {
+    // if chosen value is a number
+    if (!isNaN(data[0][key])) {
       for (let i = 0; i < data.length; i++) {
         if (data[i][key] == value) {
           specificNameEntries.push(data[i]);
@@ -42,6 +42,7 @@ function Modal(route) {
 
     return sortedData;
   };
+  // get the data ,depending on the categories clicked
   const fetchDataUsers = async () => {
     try {
       const response = await fetch(
@@ -66,6 +67,7 @@ function Modal(route) {
       throw Error("error", error);
     }
   };
+  // cut out and display 20 elements based on the page figures which is presented by limit
   useEffect(() => {
     if (sort) {
       const dataSort = sortData(data, sort);

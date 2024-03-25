@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all messages
 const browse = async (req, res, next) => {
   try {
     const messages = await tables.contact.readAll();
@@ -9,6 +9,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to browse  messages dont read number
 const browseStatistics = async (req, res, next) => {
   try {
     const messages = await tables.contact.readAllContactStatistic();
@@ -18,6 +19,7 @@ const browseStatistics = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a message by id
 const read = async (req, res, next) => {
   try {
     const message = await tables.contact.read(req.params.id);
@@ -30,7 +32,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to edit a message by id
 const edit = async (req, res, next) => {
   try {
     const message = await tables.contact.edit(req.body, req.params.id);
@@ -43,7 +45,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add a message
 const add = async (req, res, next) => {
   try {
     const message = await tables.contact.add(req.body);
@@ -56,7 +58,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a message by id
 const destroy = async (req, res, next) => {
   try {
     const result = await tables.contact.delete(req.params.id);
@@ -69,7 +71,7 @@ const destroy = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a message by id
 module.exports = {
   browse,
   browseStatistics,

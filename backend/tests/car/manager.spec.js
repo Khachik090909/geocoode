@@ -1,7 +1,7 @@
 // Import required dependencies
 const { database, tables } = require("../setup");
 const { carCreate, carUpdate } = require("../testdata");
-
+// create carc in the database
 describe("Create Car", () => {
   it("should create an Car successfully", async () => {
     const result = await tables.car.add(carCreate);

@@ -1,60 +1,60 @@
 const validateMessage = (req, res, next) => {
-  // Extraction des données du corps de la requête
+  // Extracting data from the request body
   const { name, email, object, subject } = req.body;
 
-  // Expressions régulières pour la validation
+  // Regular expressions for validation
   const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
 
-  // Tableau pour stocker les erreurs de validation
+  // Array to store validation errors
   const errors = [];
 
-  // Validation pour le champ 'name'
+  // Validation for the 'name' field
   if (name == null) {
-    errors.push({ field: "name", message: "Ce champ est obligatoire" });
+    errors.push({ field: "name", message: "This field is required" });
   } else if (name.length >= 100) {
     errors.push({
       field: "name",
-      message: "Doit contenir moins de 100 caractères",
+      message: "Must contain less than 100 characters",
     });
   }
 
-  // Validation pour le champ 'email'
+  // Validation for the 'email' field
   if (email == null) {
-    errors.push({ field: "email", message: "Ce champ est obligatoire" });
+    errors.push({ field: "email", message: "This field is required" });
   } else if (email.length >= 100) {
     errors.push({
       field: "email",
-      message: "Doit contenir moins de 255 caractères",
+      message: "Must contain less than 255 characters",
     });
   } else if (!emailRegex.test(email)) {
-    errors.push({ field: "email", message: "Email invalide" });
+    errors.push({ field: "email", message: "Invalid email" });
   }
 
-  // Validation pour le champ 'object'
+  // Validation for the 'object' field
   if (object == null) {
-    errors.push({ field: "object", message: "Ce champ est obligatoire" });
+    errors.push({ field: "object", message: "This field is required" });
   } else if (object.length >= 255) {
     errors.push({
       field: "object",
-      message: "Doit contenir moins de 255 caractères",
+      message: "Must contain less than 255 characters",
     });
   }
 
-  // Validation pour le champ 'subject'
+  // Validation for the 'subject' field
   if (subject == null) {
-    errors.push({ field: "subject", message: "Ce champ est obligatoire" });
+    errors.push({ field: "subject", message: "This field is required" });
   } else if (subject.length < 10) {
     errors.push({
       field: "subject",
-      message: "Doit contenir au moins de 10 caractères",
+      message: "Must contain at least 10 characters",
     });
   }
 
-  // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
+  // If errors are present, return a response with status code 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
-    // Si aucune erreur, passe à la fonction middleware suivante
+    // If no errors, proceed to the next middleware function
     next();
   }
 };

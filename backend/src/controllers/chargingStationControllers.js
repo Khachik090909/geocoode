@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all charging stations
 const browse = async (req, res, next) => {
   try {
     const stations = await tables.charging_station.readAll();
@@ -8,6 +8,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to browse  charging stations number
 const browseStatistic = async (req, res, next) => {
   try {
     const stations = await tables.charging_station.readAllStatistic();
@@ -17,7 +18,7 @@ const browseStatistic = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to browse all charging stations positions
 const browsePosition = async (req, res, next) => {
   try {
     const stations = await tables.charging_station.readAllPosition();
@@ -26,7 +27,7 @@ const browsePosition = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to read a charging station by id
 const read = async (req, res, next) => {
   try {
     const station = await tables.charging_station.read(req.params.id);
@@ -39,7 +40,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to edit a charging station by id
 const edit = async (req, res, next) => {
   try {
     const station = await tables.charging_station.edit(req.body, req.params.id);
@@ -52,7 +53,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add a charging station
 const add = async (req, res, next) => {
   try {
     const station = await tables.charging_station.add(req.body);
@@ -65,7 +66,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a charging station by id
 const destroy = async (req, res, next) => {
   try {
     const result = await tables.charging_station.delete(req.params.id);

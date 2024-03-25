@@ -18,7 +18,7 @@ function AddCar({ state, dataProps }) {
   const [plugId, setPlugId] = useState([]);
   const [brandId, setBrandId] = useState([]);
   const [data, setData] = useState();
-
+  // scroll to start  of page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -56,9 +56,9 @@ function AddCar({ state, dataProps }) {
             {
               method: "PUT",
               headers: {
-                "Content-Type": "application/json", // Spécifier le type de contenu JSON
+                "Content-Type": "application/json",
               },
-              body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
+              body: JSON.stringify(data),
             }
           );
           if (!response.ok) {
@@ -74,9 +74,9 @@ function AddCar({ state, dataProps }) {
           const response = await fetch(`${VITE_BACKEND_URL}/api/cars`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", // Spécifier le type de contenu JSON
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
+            body: JSON.stringify(data),
           });
           if (!response.ok) {
             await response.json();
@@ -89,12 +89,13 @@ function AddCar({ state, dataProps }) {
       }
     }
   };
+  // Repairing data to post
   useEffect(() => {
     if (plugId.length === 1 && brandId.length === 1) {
       setData({ user_id: id, plug_id: plugId[0].id, brand_id: brandId[0].id });
     }
   }, [plugId, brandId]);
-
+  // Separation of Brend's trademarks and single copy safeguard
   useEffect(() => {
     const dataMarque = [];
     dataBrands.map((item) => {
@@ -109,6 +110,7 @@ function AddCar({ state, dataProps }) {
       setBrandId(modele.filter((item) => item.model === dataProps.model));
     }
   }, [dataBrands]);
+  //Brand proposal after the second letter type
   useEffect(() => {
     if (valueModal.length > 1) {
       setPropose(marque.filter((item) => item.includes(valueModal)));
@@ -116,7 +118,7 @@ function AddCar({ state, dataProps }) {
       setPropose([]);
     }
   }, [valueModal]);
-
+  // preparation of models according to the chosen brands
   useEffect(() => {
     if (propose[0] === valueModal && valueModal) {
       setModele(dataBrands.filter((item) => item.Marque === valueModal));

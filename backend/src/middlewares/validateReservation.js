@@ -1,5 +1,5 @@
 const validateReservation = (req, res, next) => {
-  // Extraction des données du corps de la requête
+  // Extracting data from the request body
   const {
     user_id: userId,
     charging_station_id: chargingStationId,
@@ -7,53 +7,53 @@ const validateReservation = (req, res, next) => {
     amount_paid: amountPaid,
   } = req.body;
 
-  // Expression régulière pour la validation de la date
+  // Regular expression for date validation
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-  // Tableau pour stocker les erreurs de validation
+  // Array to store validation errors
   const errors = [];
 
-  // Validation pour le champ 'user_id'
+  // Validation for the 'user_id' field
   if (userId === null) {
-    errors.push({ field: "userId", message: "Ce champ est obligatoire" });
+    errors.push({ field: "userId", message: "This field is required" });
   }
 
-  // Validation pour le champ 'charging_station_id'
+  // Validation for the 'charging_station_id' field
   if (chargingStationId == null) {
     errors.push({
       field: "chargingStationId",
-      message: "Ce champ est obligatoire",
+      message: "This field is required",
     });
   }
 
-  // Validation pour le champ 'reservation_date'
+  // Validation for the 'reservation_date' field
   if (reservationDate == null || reservationDate.trim() === "") {
     errors.push({
       field: "reservationDate",
-      message: "Ce champ est obligatoire",
+      message: "This field is required",
     });
   } else if (!dateRegex.test(reservationDate)) {
     errors.push({
       field: "reservationDate",
-      message: "Format de date invalide. Utilisez le format YYYY-MM-DD",
+      message: "Invalid date format. Use the format YYYY-MM-DD",
     });
   }
 
-  // Validation pour le champ 'amount_paid'
+  // Validation for the 'amount_paid' field
   if (amountPaid == null || amountPaid.trim() === "") {
-    errors.push({ field: "amountPaid", message: "Ce champ est obligatoire" });
+    errors.push({ field: "amountPaid", message: "This field is required" });
   } else if (Number.isNaN(amountPaid)) {
     errors.push({
       field: "amountPaid",
-      message: "Le montant payé doit être un nombre",
+      message: "The amount paid must be a number",
     });
   }
 
-  // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
+  // If errors are present, return a response with status code 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
-    // Si aucune erreur, passe à la fonction middleware suivante
+    // If no errors, proceed to the next middleware function
     next();
   }
 };

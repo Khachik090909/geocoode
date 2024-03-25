@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all plugs
 const browse = async (req, res, next) => {
   try {
     const messages = await tables.plug.readAll();
@@ -9,7 +9,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to read a plug by id
 const read = async (req, res, next) => {
   try {
     const message = await tables.plug.read(req.params.id);
@@ -22,7 +22,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to edit a plug by id
 const edit = async (req, res, next) => {
   try {
     const message = await tables.plug.edit(req.body, req.params.id);
@@ -35,7 +35,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add a plug
 const add = async (req, res, next) => {
   try {
     const message = await tables.plug.add(req.body);
@@ -48,7 +48,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a plug by id
 const destroy = async (req, res, next) => {
   try {
     const result = await tables.plug.delete(req.params.id);
@@ -61,7 +61,7 @@ const destroy = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete all plugs
 module.exports = {
   browse,
   read,

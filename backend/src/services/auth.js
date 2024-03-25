@@ -1,16 +1,18 @@
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const client = require("../../database/client");
-// Middleware pour hacher le mot de passe
+
+// Middleware for hashing the password
 const hashPassword = async (req, res, next) => {
   try {
     const { password } = req.body;
-    // Validation pour le champ 'password'
+
+    // Validation for the 'password' field
     if (password == null) {
       return res.status(400).json({
         error: {
           field: "password",
-          message: "Ce champ est obligatoire",
+          message: "This field is required",
         },
       });
     }
@@ -18,12 +20,12 @@ const hashPassword = async (req, res, next) => {
       return res.status(400).json({
         error: {
           field: "password",
-          message: "Le mot de passe doit contenir au moins 8 caractères",
+          message: "Password must be at least 8 characters long",
         },
       });
     }
 
-    // Hachage du mot de passe avec Argon2
+    // Hashing the password with Argon2
     const hash = await argon2.hash(password);
     req.body.hashed_password = hash;
     delete req.body.password;
@@ -31,17 +33,16 @@ const hashPassword = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-  return null;
 };
 
-// Middleware pour vérifier le mot de passe lors de l'authentification
+// Middleware to verify the password during authentication
 const verifyPassword = async (req, res, next) => {
   const { password } = req.body;
   const { hashed_password: hashedPassword } = req.user;
 
   try {
-    const reponse = await argon2.verify(hashedPassword, password);
-    if (!reponse) {
+    const response = await argon2.verify(hashedPassword, password);
+    if (!response) {
       res.sendStatus(401);
     }
     const payload = {
@@ -59,13 +60,13 @@ const verifyPassword = async (req, res, next) => {
   }
 };
 
-// Middleware pour vérifier le token JWT lors des requêtes sécurisées
+// Middleware to verify the JWT token during secure requests
 const verifyToken = async (req, res, next) => {
   try {
     const authorization = req.get("Authorization");
 
     if (!authorization) {
-      throw new Error("Merci de vous identifier !");
+      throw new Error("Please authenticate!");
     }
 
     const [type, token] = authorization.split(" ");
@@ -82,10 +83,11 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
+// Middleware to verify the validity of JWT token
 const verifyTokenValid = (req, res, next) => {
   const authorization = req.get("Authorization");
   if (!authorization) {
-    throw new Error("Merci de vous identifier !");
+    throw new Error("Please authenticate!");
   }
 
   const [type, token] = authorization.split(" ");
@@ -100,7 +102,7 @@ const verifyTokenValid = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Vérifier si la date d'expiration est valide
+    // Check if the expiration date is valid
     const currentTime = Math.floor(Date.now() / 1000);
     if (decoded.exp < currentTime) {
       return res.status(401).json({ error: "Token has expired" });
@@ -111,8 +113,9 @@ const verifyTokenValid = (req, res, next) => {
   } catch (error) {
     return res.sendStatus(401);
   }
-  return null;
 };
+
+// Middleware to verify the actual password
 const verifyPasswordActual = async (req, res, next) => {
   const { id } = req.params;
   const { passwordActuel } = req.body;
@@ -123,21 +126,19 @@ const verifyPasswordActual = async (req, res, next) => {
   const Password = rows[0].hashed_password;
 
   try {
-    const reponse = await argon2.verify(Password, passwordActuel);
+    const response = await argon2.verify(Password, passwordActuel);
 
-    if (!reponse) {
-      return res.status(401).send("Le mot de passe actuel est incorrect.");
+    if (!response) {
+      return res.status(401).send("Current password is incorrect.");
     }
     delete req.body.passwordActuel;
     next();
   } catch (error) {
-    console.error(
-      "Erreur lors de la vérification du mot de passe actuel :",
-      error
-    );
+    console.error("Error verifying the current password:", error);
   }
-  return null;
 };
+
+// Middleware to retrieve missing user elements
 const missingElements = async (req, res, next) => {
   const [rows] = await client.query("SELECT * FROM user WHERE id = ?", [
     req.params.id,
@@ -152,8 +153,9 @@ const missingElements = async (req, res, next) => {
   req.body.date_of_birth = rows[0].date_of_birth;
   req.body.is_admin = rows[0].is_admin;
   next();
-  return null;
 };
+
+// Middleware to add password
 const addPassword = async (req, res, next) => {
   const { id } = req.params;
   const [rows] = await client.query(
@@ -164,9 +166,9 @@ const addPassword = async (req, res, next) => {
   req.body.hashed_password = rows[0].hashed_password;
   delete req.body.id;
   next();
-
-  return null;
 };
+
+// Middleware to verify admin status
 const verifyAdmin = async (req, res, next) => {
   const [rows] = await client.query("SELECT is_admin FROM user WHERE id = ?", [
     req.query.id,
@@ -175,6 +177,7 @@ const verifyAdmin = async (req, res, next) => {
   req.query.is_admin = rows[0].is_admin;
   next();
 };
+// Middleware to verify exist email
 const verifyExistEmail = async (req, res, next) => {
   const [rows] = await client.query("SELECT email FROM user WHERE email = ?", [
     req.body.email,

@@ -14,7 +14,7 @@ import Profile, { fetchCarUser } from "./components/profile/Profile";
 const App = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      {/* routes pour l'utilisateur ou visiteur  */}
+      {/* routs for user  */}
       <Route
         element={
           <>
@@ -29,7 +29,7 @@ const App = createBrowserRouter(
         <Route element={<Logout />} path="/logout" />
         <Route element={<Profile />} path="/profile" loader={fetchCarUser} />
       </Route>
-      {/* routes pour l'administrateur */}
+      {/* routes for admin */}
       <Route element={<AdminLayout />} path="/admin"></Route>
     </Route>
   )

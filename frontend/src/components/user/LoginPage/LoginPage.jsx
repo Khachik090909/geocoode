@@ -27,9 +27,9 @@ function LoginPage() {
       const response = await fetch(`${VITE_BACKEND_URL}/api/users/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Spécifier le type de contenu JSON
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(data), // Convertir l'objet data en chaîne JSON
+        body: JSON.stringify(data),
       });
       const user = await response.json();
       if (response.status === 200) {

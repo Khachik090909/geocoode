@@ -28,7 +28,7 @@ function Map() {
       });
     }
   };
-
+  //retrieve GPS coordinates continue
   useEffect(() => {
     getCurrentPosition();
     const intervalId = setInterval(getCurrentPosition, 10000);
@@ -36,7 +36,7 @@ function Map() {
     return () => clearInterval(intervalId);
   }, []);
 
-  // Fonction pour récupérer les stations de recharge depuis le backend
+  // Function to retrieve charging stations from the backend
   const fetchChargingStations = useCallback(async () => {
     try {
       const response = await fetch(
@@ -44,7 +44,7 @@ function Map() {
       );
       const data = await response.json();
 
-      // Traitement des données garder 6 chiffres après la virgule
+      // Data processing keep 6 digits after the decimal point
       const processedData = data.map((station) => {
         const latitude = parseFloat(station.consolidated_latitude).toFixed(6);
         const longitude = parseFloat(station.consolidated_longitude).toFixed(6);
@@ -56,7 +56,7 @@ function Map() {
         };
       });
 
-      // Supprimer les doublons
+      // Remove duplicates
       const uniqueData = processedData.filter(
         (station, index, self) =>
           index ===
@@ -77,7 +77,7 @@ function Map() {
     fetchChargingStations();
   }, [fetchChargingStations]);
 
-  // Fonction pour créer une icône personnalisée pour les clusters
+  // Function to create a custom icon for clusters
   const createClusterCustomIcon = useCallback((cluster) => {
     return new DivIcon({
       html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
@@ -86,7 +86,7 @@ function Map() {
     });
   }, []);
 
-  // Icône personnalisée pour les marqueurs individuels
+  // Custom icon for individual markers
   const customIcon = new Icon({
     iconUrl: VectorImage,
     iconSize: [38, 38],

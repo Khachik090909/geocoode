@@ -28,6 +28,7 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
     setValider(false);
     setMotor(!motor);
   };
+  // Modify the value and color of an input
   const handlerChangeValue = (e, id) => {
     setModifValue(e.target.value);
     setIdElementChange(id);
@@ -49,6 +50,7 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
       setIdElementModif([...idElementModif, idElementChange]);
     }
   }, [idElementChange]);
+  // modify data after click
   useEffect(() => {
     const newDataLoad = dataLoad.map((item) => {
       if (item.id === idElementChange) {
@@ -63,6 +65,7 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
     setModifValue(e.target.value);
     setMotor(!motor);
   };
+  //retrieve ID of deleted items or remove on undo
   const handlerClickDelete = (id) => {
     if (idElementDeleite.includes(id)) {
       setIdElementDelete(idElementDeleite.filter((item) => item !== id));
@@ -70,22 +73,26 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
       setIdElementDelete([...idElementDeleite, id]);
     }
   };
+
   const postDeleteData = async () => {
+    //prepare data modified
     const dataModif = dataLoad.filter((item) =>
       idElementModif.includes(item.id)
     );
+    // modify all lines chosen in the cycle,
     await Promise.all(
       dataModif.map(async (item) => {
         await putData(item);
       })
     );
+    // delete all lines chosen in the cycle
     await Promise.all(
       idElementDeleite.map(async (item) => {
         await deletedata(item);
       })
     );
-    apdeteState();
-    await fetchDataUsers();
+    apdeteState(); //refresh the state
+    await fetchDataUsers(); //refresh the data after modification
   };
   const deletedata = async (id) => {
     try {
@@ -99,13 +106,20 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
           },
         }
       );
-      console.log(response);
+      if (response.status === 500) {
+        setIsErrors([
+          {
+            field: "server",
+            message:
+              "Cet enregistrement ne peut pas être supprimé car il est référencé dans une autre table.",
+          },
+        ]);
+      }
       if (!response.ok) {
         const dataresponse = await response.json();
         if (dataresponse.validationErrors.length > 0) {
           setIsErrors(dataresponse.validationErrors);
         }
-        throw new Error("Erreur lors de l'inscription");
       } else {
         setIsErrors(null);
         setIsSubmit(true);
@@ -127,13 +141,11 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
           body: JSON.stringify(data),
         }
       );
-      console.log(response);
       if (!response.ok) {
         const dataresponse = await response.json();
         if (dataresponse.validationErrors.length > 0) {
           setIsErrors(dataresponse.validationErrors);
         }
-        throw new Error("Erreur lors de l'inscription");
       } else {
         setIsErrors(null);
         setIsSubmit(true);
@@ -174,7 +186,9 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
                     indexX == detectInput.indexX &&
                     indexY == detectInput.indexY
                       ? modifValue
-                      : value[1]
+                      : value[1] !== null
+                        ? value[1]
+                        : "null"
                   }
                   style={
                     inputModif.some(

@@ -10,7 +10,7 @@ function Navbar() {
   const [mobile, setMobile] = useState();
   const [openContact, setOpenContact] = useState(false);
   const token = localStorage.getItem("token");
-
+  //style nacBar mobile and desktop
   useEffect(() => {
     if (window.innerWidth < 450) {
       setMobile(true);
@@ -20,7 +20,7 @@ function Navbar() {
       setButtonClick(true);
     }
   }, []);
-
+  // user connect or not
   useEffect(() => {
     if (token) {
       setNavbarData(["Map", "Profile", "contact", "Se deconnecter"]);
@@ -28,7 +28,7 @@ function Navbar() {
       setNavbarData(["Map", "contact", "Se connecter"]);
     }
   }, [token]);
-
+  // click navbar event
   const handlerClick = (item) => {
     if (item === "Map") {
       navigate("/");

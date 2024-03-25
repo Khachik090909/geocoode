@@ -28,6 +28,5 @@ from ${this.table}`);
   }
 }
 
-//
 // Exporting the ChargingStationManager class
 module.exports = ChargingStationManager;

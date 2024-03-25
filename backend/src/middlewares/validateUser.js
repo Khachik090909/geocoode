@@ -1,6 +1,5 @@
 const validateUser = (req, res, next) => {
-  // Extraction des données du corps de la requête
-
+  // Extracting data from the request body
   const {
     name,
     firstname,
@@ -10,140 +9,144 @@ const validateUser = (req, res, next) => {
     postal_code: postalCode,
     city,
     number_vehicles: numberVehiclesString,
-    profil_image: profilImage,
+    profil_image: profileImage,
     password,
     confirm_password: confirmPassword,
   } = req.body;
 
-  // Expressions régulières pour la validation
+  // Regular expressions for validation
   const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
   const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-  // Tableau pour stocker les erreurs de validation
+  // Array to store validation errors
   const errors = [];
-  // Validation pour le champ 'name'
+
+  // Validation for the 'name' field
   if (name == null) {
-    errors.push({ field: "Nom", message: "Ce champ est obligatoire" });
+    errors.push({ field: "Name", message: "This field is required" });
   } else if (name.length >= 100) {
     errors.push({
-      field: "Nom",
-      message: "Doit contenir moins de 100 caractères",
+      field: "Name",
+      message: "Must contain less than 100 characters",
     });
   }
 
-  // Validation pour le champ 'firstname'
+  // Validation for the 'firstname' field
   if (firstname == null) {
-    errors.push({ field: "Prénom", message: "Ce champ est obligatoire" });
+    errors.push({ field: "Firstname", message: "This field is required" });
   } else if (firstname.length >= 100) {
     errors.push({
-      field: "Prénom",
-      message: "Doit contenir moins de 45 caractères",
+      field: "Firstname",
+      message: "Must contain less than 45 characters",
     });
   }
 
-  // Validation pour le champ 'email'
+  // Validation for the 'email' field
   if (email == null) {
-    errors.push({ field: "email", message: "Ce champ est obligatoire" });
+    errors.push({ field: "email", message: "This field is required" });
   } else if (email.length >= 100) {
     errors.push({
       field: "email",
-      message: "Doit contenir moins de 100 caractères",
+      message: "Must contain less than 100 characters",
     });
   } else if (!emailRegex.test(email)) {
-    errors.push({ field: "email", message: "Email invalide" });
+    errors.push({ field: "email", message: "Invalid email" });
   }
 
-  // Validation pour le champ 'gender'
+  // Validation for the 'gender' field
   if (gender == null) {
-    errors.push({ field: "Sexe", message: "Ce champ est obligatoire" });
+    errors.push({ field: "Gender", message: "This field is required" });
   } else if (gender.length >= 45) {
     errors.push({
-      field: "Sexe",
-      message: "Doit contenir moins de 45 caractères",
+      field: "Gender",
+      message: "Must contain less than 45 characters",
     });
   }
 
-  // Validation pour le champ 'date_of_birth'
+  // Validation for the 'date_of_birth' field
   if (dateOfBirth == null) {
     errors.push({
-      field: "Anniversaire",
-      message: "Ce champ est obligatoire",
+      field: "Date of Birth",
+      message: "This field is required",
     });
   } else if (!dateRegex.test(dateOfBirth)) {
     errors.push({
-      field: "Anniversaire",
-      message: "Format de date invalide. Utilisez le format YYYY-MM-DD",
+      field: "Date of Birth",
+      message: "Invalid date format. Use YYYY-MM-DD format",
     });
   }
 
-  // Validation pour le champ 'postal_code'
+  // Validation for the 'postal_code' field
   if (postalCode == null) {
-    errors.push({ field: "postalCode", message: "Ce champ est obligatoire" });
+    errors.push({ field: "postalCode", message: "This field is required" });
   } else if (!/^[0-9]{5}$/.test(postalCode)) {
     errors.push({
-      field: "Code Postal",
-      message: "Code postal invalide (doit contenir 5 chiffres)",
+      field: "Postal Code",
+      message: "Invalid postal code (must contain 5 digits)",
     });
   }
 
-  // Validation pour le champ 'city'
+  // Validation for the 'city' field
   if (city == null) {
-    errors.push({ field: "city", message: "Ce champ est obligatoire" });
+    errors.push({ field: "city", message: "This field is required" });
   } else if (city.length >= 45) {
     errors.push({
-      field: "Ville",
-      message: "Doit contenir moins de 45 caractères",
+      field: "City",
+      message: "Must contain less than 45 characters",
     });
   }
-  // ...
 
-  // Convertir la valeur du champ 'number_vehicles' en un nombre
+  // Convert the value of the 'number_vehicles' field to a number
   const numberVehicles = parseInt(numberVehiclesString, 10);
 
-  // Validation pour le champ 'number_vehicles'
+  // Validation for the 'number_vehicles' field
   if (
     numberVehicles == null ||
     Number.isNaN(numberVehicles) ||
     numberVehicles < 0
   ) {
     errors.push({
-      field: "Nonmbre de véhicules",
-      message: "Le nombre de véhicules doit être un entier positif",
+      field: "Number of Vehicles",
+      message: "Number of vehicles must be a positive integer",
     });
   }
 
-  // Validation pour le champ 'profil_image'
-  if (profilImage) {
+  // Validation for the 'profile_image' field
+  if (profileImage) {
     const regex = /\.(jpg|jpeg|png|gif)$/i;
 
-    if (!regex.test(profilImage)) {
+    if (!regex.test(profileImage)) {
       errors.push({
-        field: "profilImage",
+        field: "profileImage",
         message:
-          "Format d'image invalide. Les formats autorisés sont JPG, JPEG, PNG et GIF.",
+          "Invalid image format. Allowed formats are JPG, JPEG, PNG, and GIF.",
       });
     }
   }
+
+  // Validation for password length
   if (password.length < 8) {
     errors.push({
       field: "password",
-      message: "Le mot de passe doit contenir au moins 8 caractères",
+      message: "Password must be at least 8 characters long",
     });
   }
+
+  // Validation for password confirmation
   if (password !== confirmPassword) {
     errors.push({
       field: "confirmPassword",
-      message: "Les mots de passe ne sont pas identiques",
+      message: "Passwords do not match",
     });
   }
-  // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
+
+  // If errors are present, return a response with status code 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
+    // If no errors, proceed to the next middleware function
     delete req.body.confirm_password;
-
     req.body.is_admin = 0;
-    // Si aucune erreur, passe à la fonction middleware suivante
     next();
   }
 };

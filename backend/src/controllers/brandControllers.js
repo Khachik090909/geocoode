@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all brands
 const browse = async (req, res, next) => {
   try {
     const messages = await tables.brand.readAll();
@@ -9,7 +9,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to read brand by id
 const read = async (req, res, next) => {
   try {
     const message = await tables.brand.read(req.params.id);
@@ -22,7 +22,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to edit brand by id
 const edit = async (req, res, next) => {
   try {
     const message = await tables.brand.edit(req.body, req.params.id);
@@ -35,7 +35,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add brand
 const add = async (req, res, next) => {
   try {
     const message = await tables.brand.add(req.body);
@@ -48,7 +48,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete brand by id
 const destroy = async (req, res, next) => {
   try {
     const result = await tables.brand.delete(req.params.id);
@@ -61,7 +61,7 @@ const destroy = async (req, res, next) => {
     next(error);
   }
 };
-
+// exports the controller functions
 module.exports = {
   browse,
   read,

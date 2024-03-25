@@ -10,13 +10,13 @@ function CardPlug() {
   const [reservation, setReservation] = useState([]);
   const [onClick, setOnClick] = useState(false);
   const [cordoneClick, setCordoneClick] = useState("");
+  const { VITE_BACKEND_URL } = import.meta.env;
+  const { id } = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
     const fetchReservationUser = async () => {
       if (!localStorage.getItem("user")) {
         return redirect("/logout");
       }
-      const { VITE_BACKEND_URL } = import.meta.env;
-      const { id } = JSON.parse(localStorage.getItem("user"));
 
       const response = await fetch(
         `${VITE_BACKEND_URL}/api/users/${id}/reservations`,
@@ -64,8 +64,10 @@ function CardPlug() {
         console.error(error);
       }
     }
+    //restart page
     window.location.reload();
   };
+  // scroll to end  of page
   useEffect(() => {
     if (cordoneClick) {
       window.scrollTo({

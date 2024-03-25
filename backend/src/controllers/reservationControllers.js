@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all reservations
 const browse = async (req, res, next) => {
   try {
     const reservations =
@@ -9,6 +9,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to browse reservations  number
 const browseStatistics = async (req, res, next) => {
   try {
     const reservations =
@@ -19,6 +20,7 @@ const browseStatistics = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a reservation by id
 const read = async (req, res, next) => {
   try {
     const reservation = await tables.user_has_charging_station.readReservation(
@@ -33,6 +35,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a reservation by user.id
 const readUserReservations = async (req, res, next) => {
   try {
     const reservation =
@@ -48,7 +51,7 @@ const readUserReservations = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to edit a reservation by id
 const edit = async (req, res, next) => {
   try {
     const reservation = await tables.user_has_charging_station.edit(
@@ -64,7 +67,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add a reservation
 const add = async (req, res, next) => {
   try {
     const reservation = await tables.user_has_charging_station.add(req.body);
@@ -77,7 +80,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a reservation by id
 const destroy = async (req, res, next) => {
   try {
     const reservation = await tables.user_has_charging_station.delete(
@@ -92,7 +95,7 @@ const destroy = async (req, res, next) => {
     next(error);
   }
 };
-
+// exporting the controller functions
 module.exports = {
   browse,
   browseStatistics,

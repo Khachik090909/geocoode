@@ -1,43 +1,43 @@
 const validateUserLogin = (req, res, next) => {
-  // Extraction des données du corps de la requête
+  // Extracting data from the request body
   const { email, password } = req.body;
 
-  // Expressions régulières pour la validation
+  // Regular expressions for validation
   const emailRegex = /[a-z0-9._]+@[a-z0-9-]+\.[a-z]{2,3}/;
 
-  // Tableau pour stocker les erreurs de validation
+  // Array to store validation errors
   const errors = [];
 
-  // Validation pour le champ 'email'
+  // Validation for the 'email' field
   if (email == null) {
-    errors.push({ field: "email", message: "Ce champ est obligatoire" });
+    errors.push({ field: "email", message: "This field is required" });
   } else if (email.length >= 100) {
     errors.push({
       field: "email",
-      message: "Doit contenir moins de 100 caractères",
+      message: "Must contain less than 100 characters",
     });
   } else if (!emailRegex.test(email)) {
-    errors.push({ field: "email", message: "Email invalide" });
+    errors.push({ field: "email", message: "Invalid email" });
   }
 
-  // Validation pour le champ 'password'
+  // Validation for the 'password' field
   if (password == null) {
-    errors.push({ field: "password", message: "Ce champ est obligatoire" });
+    errors.push({ field: "password", message: "This field is required" });
   }
   if (password.length < 8) {
     errors.push({
       field: "password",
-      message: "Le mot de passe doit contenir au moins 8 caractères",
+      message: "Password must be at least 8 characters long",
     });
   }
-  // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
+
+  // If errors are present, return a response with status code 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
-    // Si aucune erreur, passe à la fonction middleware suivante
+    // If no errors, proceed to the next middleware function
     next();
   }
-  return null;
 };
 
 module.exports = validateUserLogin;

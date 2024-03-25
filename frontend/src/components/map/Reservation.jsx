@@ -44,7 +44,7 @@ function Reservation({ id, setId }) {
   const map = useMap();
   const markerRef = useRef(null);
   const routingControlRef = useRef(null);
-
+  //Image plug according to screen size
   useEffect(() => {
     if (window.innerWidth <= 768) {
       setDataPrice([
@@ -74,6 +74,7 @@ function Reservation({ id, setId }) {
     };
     fetchStation();
   }, [id]);
+
   const fetchReservationUser = async () => {
     const { id } = JSON.parse(localStorage.getItem("user"));
     const response = await fetch(
@@ -189,7 +190,7 @@ function Reservation({ id, setId }) {
     }
   };
   useEffect(() => {
-    // Récupère les coordonnées de la station de recharge
+    // Retrieves charging station coordinates
     if (station && userLocation) {
       const chargingStationsArray = [station];
       const waypoints = chargingStationsArray.map((station) => {
@@ -198,7 +199,7 @@ function Reservation({ id, setId }) {
           station.consolidated_longitude
         );
       });
-      // Crée un contrôle de routage avec des options
+      // Creates a route control with options
       const routingControl = L.Routing.control({
         waypoints: [
           {
@@ -217,12 +218,12 @@ function Reservation({ id, setId }) {
         language: "fr",
         position: "bottomleft",
       })
-        // Événement déclenché lorsque des routes sont trouvées
+        // Event triggered when routes are found
         .on("routesfound", (e) => {
           const currentMarker = markerRef.current;
 
           if (currentMarker) {
-            // Anime le déplacement du marqueur le long des coordonnées de l'itinéraire
+            // Animates the movement of the marker along the route coordinates
             e.routes[0].coordinates.forEach((c, i) => {
               setTimeout(
                 () => currentMarker.setLatLng([c.lat, c.lng]),
@@ -231,12 +232,12 @@ function Reservation({ id, setId }) {
             });
           }
         })
-        // Ajoute le contrôle de routage à la carte
+        // Adds routing control to the map
         .addTo(map);
 
-      // Stocke la référence au contrôle de routage
+      // Stores reference to routing control
       routingControlRef.current = routingControl;
-      // Nettoie la carte lorsque le composant est démonté
+      // Cleans the board when the component is disassembled
       return () => {
         removeRoutingControl();
       };

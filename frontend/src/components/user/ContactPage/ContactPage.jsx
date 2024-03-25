@@ -12,6 +12,7 @@ function ContactPage({ setOpenContact }) {
     name: user ? user.firstname + " " + user.name : "",
     email: user ? user.email : "",
   });
+  // Scroll to start of page
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -34,7 +35,6 @@ function ContactPage({ setOpenContact }) {
         if (dataresponse.validationErrors.length > 0) {
           setIsErrors(dataresponse.validationErrors);
         }
-        throw new Error("Erreur lors de l'inscription");
       } else {
         setIsErrors(null);
         setIsSubmit(true);

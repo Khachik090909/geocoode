@@ -48,6 +48,7 @@ function Statistic() {
       throw Error("error", error);
     }
   };
+  //retrieve the number of each object
   useEffect(() => {
     routes.forEach((route) => {
       fetchData(route);

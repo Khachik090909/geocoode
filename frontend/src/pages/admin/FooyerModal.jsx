@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 function FooyerModal({ dataLenght, setLimit }) {
   const [buttons, setButtons] = useState([]);
   const [buttonClick, setButtonClick] = useState(1);
+  // fix page turn numbers and cut out a 20 based page click
   useEffect(() => {
     const element = [];
     for (let i = 0; i < Math.ceil(dataLenght / 20); i += 1) {

@@ -9,12 +9,14 @@ function ModifyCar() {
   const [cordoneClick, setCordoneClick] = useState("");
   const dataCars = useLoaderData();
   const navigate = useNavigate();
+  // scroll to start  of page
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   }, []);
+  // scroll to end  of page
   useEffect(() => {
     if (cordoneClick) {
       window.scrollTo({

@@ -7,7 +7,7 @@ function LocationMarker() {
   const [location, setLocation] = useState(null);
   const [motor, setMotor] = useState(false);
 
-  // Trouver la localisation
+  // Find the location
   const map = useMapEvents({
     locationfound(e) {
       setLocation(e.latlng);
@@ -15,7 +15,7 @@ function LocationMarker() {
     },
   });
 
-  // Gestionnaire de clic pour le boutton location
+  // Click handler for location button
   useEffect(() => {
     map.locate();
   }, [motor]);

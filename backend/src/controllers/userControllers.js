@@ -1,5 +1,5 @@
 const tables = require("../tables");
-
+// controller function to browse all users
 const browse = async (req, res, next) => {
   try {
     const users = await tables.user.readAllUser(req.query.is_admin);
@@ -8,6 +8,7 @@ const browse = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to browse all users number
 const browseStatistics = async (req, res, next) => {
   try {
     const users = await tables.user.readAllUserStatistics();
@@ -17,6 +18,7 @@ const browseStatistics = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a user by id
 const read = async (req, res, next) => {
   try {
     const user = await tables.user.readUser(req.params.id, req.query.is_admin);
@@ -29,6 +31,7 @@ const read = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a user.is_admin by id
 const readIsAdmin = async (req, res, next) => {
   try {
     const user = await tables.user.readUserIsAdmin(req.params.id);
@@ -41,6 +44,7 @@ const readIsAdmin = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a user.is_admin by id
 const readAllUserAdmin = async (req, res, next) => {
   try {
     const users = await tables.user.readAllUserIsAdmin(req.query.id);
@@ -49,6 +53,7 @@ const readAllUserAdmin = async (req, res, next) => {
     next(error);
   }
 };
+// controller function to read a user by email
 const readByEmailAndPassToNext = async (req, res, next) => {
   try {
     const { email } = req.body;
@@ -68,7 +73,7 @@ const readByEmailAndPassToNext = async (req, res, next) => {
     next(err);
   }
 };
-
+// controller function to edit a user
 const edit = async (req, res, next) => {
   try {
     const user = await tables.user.edit(req.body, req.params.id);
@@ -81,7 +86,7 @@ const edit = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to add a user
 const add = async (req, res, next) => {
   try {
     const user = await tables.user.add(req.body);
@@ -94,7 +99,7 @@ const add = async (req, res, next) => {
     next(error);
   }
 };
-
+// controller function to delete a user
 const destroy = async (req, res, next) => {
   try {
     const result = await tables.user.delete(req.params.id);
@@ -108,7 +113,7 @@ const destroy = async (req, res, next) => {
     next(error);
   }
 };
-
+// exporting the controller functions
 module.exports = {
   browse,
   browseStatistics,

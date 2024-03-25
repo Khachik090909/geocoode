@@ -13,13 +13,11 @@ function CardProfile() {
   const [age, setAge] = useState(null);
   const [genderFr, setGenderFr] = useState({});
   const [cordoneClick, setCordoneClick] = useState("");
-
+  const { VITE_BACKEND_URL } = import.meta.env;
+  const { id } = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   useEffect(() => {
     const fetchUser = async () => {
-      const { VITE_BACKEND_URL } = import.meta.env;
-      const { id } = JSON.parse(localStorage.getItem("user"));
-      const token = localStorage.getItem("token");
-
       try {
         const response = await fetch(`${VITE_BACKEND_URL}/api/users/${id}`, {
           method: "GET",
@@ -76,6 +74,7 @@ function CardProfile() {
     setShow(!show);
     setCordoneClick(e.pageY);
   };
+  // scroll to end  of page
   useEffect(() => {
     if (cordoneClick) {
       window.scrollTo({

@@ -31,7 +31,7 @@ function RegistrationForm({ setIsSignupModal }) {
     });
   }, []);
   const formPostData = async () => {
-    // Vérifier si le mot de passe et la confirmation du mot de passe sont identiques
+    //Check if password and password confirmation are the same
     try {
       const response = await fetch(`${VITE_BACKEND_URL}/api/users/`, {
         method: "POST",
@@ -43,6 +43,7 @@ function RegistrationForm({ setIsSignupModal }) {
 
       if (!response.ok) {
         if (response.status === 400) {
+          // detect in the server, is there already a user with same email
           setIsErrors([
             {
               message: "L'email existe déjà.",
@@ -51,7 +52,6 @@ function RegistrationForm({ setIsSignupModal }) {
           ]);
         }
         const dataresponse = await response.json();
-        console.log(dataresponse);
         if (dataresponse.validationErrors.length > 0) {
           setIsErrors(dataresponse.validationErrors);
         }

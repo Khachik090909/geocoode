@@ -1,20 +1,21 @@
 const validateChargingStation = (req, res, next) => {
-  // Extraction des données du corps de la requête
+  // Extracting data from the request body
   const {
-    adresse_station: adresseStation,
+    adresse_station: addressStation,
     coordonneesXY,
-    nbre_pdc: nbrePdc,
-    puissance_nominale: puissanceNominale,
-    prise_type_ef: priseTypeEf,
-    prise_type_2: priseType2,
-    prise_type_combo_ccs: priseTypeComboCcs,
-    prise_type_chademo: priseTypeChademo,
-    prise_type_autre: priseTypeAutre,
+    nbre_pdc: numberOfChargingPoints,
+    puissance_nominale: nominalPower,
+    prise_type_ef: typeEfOutlet,
+    prise_type_2: type2Outlet,
+    prise_type_combo_ccs: typeComboCCSOutlet,
+    prise_type_chademo: typeChademoOutlet,
+    prise_type_autre: otherTypeOutlet,
   } = req.body;
 
-  // Tableau pour stocker les erreurs de validation
+  // Array to store validation errors
   const errors = [];
-  // Fonction utilitaire pour vérifier si une valeur est un nombre valide
+
+  // Utility function to check if a value is a valid number
   const isValidNumber = (value) => {
     return (
       typeof value === "number" &&
@@ -23,16 +24,15 @@ const validateChargingStation = (req, res, next) => {
     );
   };
 
-  // Validation pour le champ 'adresseStation'
-  if (!adresseStation || typeof adresseStation !== "string") {
+  // Validation for the 'addressStation' field
+  if (!addressStation || typeof addressStation !== "string") {
     errors.push({
-      field: "adresseStation",
-      message:
-        "Le champ 'adresseStation' est obligatoire et doit être une chaîne de caractères.",
+      field: "addressStation",
+      message: "'addressStation' field is required and must be a string.",
     });
   }
 
-  // Validation pour le champ 'coordonneesXY'
+  // Validation for the 'coordonneesXY' field
   if (
     !coordonneesXY ||
     !Array.isArray(coordonneesXY) ||
@@ -43,75 +43,74 @@ const validateChargingStation = (req, res, next) => {
     errors.push({
       field: "coordonneesXY",
       message:
-        "Le champ 'coordonneesXY' est obligatoire et doit être un tableau de deux nombres [longitude, latitude].",
+        "'coordonneesXY' field is required and must be an array of two numbers [longitude, latitude].",
     });
   }
 
-  // Validation pour le champ 'nbrePdc'
-  if (!isValidNumber(nbrePdc)) {
+  // Validation for the 'numberOfChargingPoints' field
+  if (!isValidNumber(numberOfChargingPoints)) {
     errors.push({
-      field: "nbrePdc",
+      field: "numberOfChargingPoints",
       message:
-        "Le champ 'nbrePdc' est obligatoire et doit être un nombre valide.",
+        "'numberOfChargingPoints' field is required and must be a valid number.",
     });
   }
 
-  // Validation pour le champ 'puissanceNominale'
-  if (!isValidNumber(puissanceNominale)) {
+  // Validation for the 'nominalPower' field
+  if (!isValidNumber(nominalPower)) {
     errors.push({
-      field: "puissanceNominale",
-      message:
-        "Le champ 'puissanceNominale' est obligatoire et doit être un nombre valide.",
+      field: "nominalPower",
+      message: "'nominalPower' field is required and must be a valid number.",
     });
   }
 
-  // Validation pour les champs 'priseTypeEf', 'priseType2', 'priseTypeComboCcs', 'priseTypeChademo', 'priseTypeAutre'
-  const validPriseValues = ["TRUE", "FALSE"];
-  if (!validPriseValues.includes(priseTypeEf)) {
+  // Validation for the 'typeEfOutlet', 'type2Outlet', 'typeComboCCSOutlet', 'typeChademoOutlet', 'otherTypeOutlet' fields
+  const validOutletValues = ["TRUE", "FALSE"];
+  if (!validOutletValues.includes(typeEfOutlet)) {
     errors.push({
-      field: "priseTypeEf",
+      field: "typeEfOutlet",
       message:
-        "Le champ 'priseTypeEf' est obligatoire et doit avoir la valeur 'TRUE' ou 'FALSE'.",
+        "'typeEfOutlet' field is required and must have value 'TRUE' or 'FALSE'.",
     });
   }
 
-  if (!validPriseValues.includes(priseType2)) {
+  if (!validOutletValues.includes(type2Outlet)) {
     errors.push({
-      field: "priseType2",
+      field: "type2Outlet",
       message:
-        "Le champ 'priseType2' est obligatoire et doit avoir la valeur 'TRUE' ou 'FALSE'.",
+        "'type2Outlet' field is required and must have value 'TRUE' or 'FALSE'.",
     });
   }
 
-  if (!validPriseValues.includes(priseTypeComboCcs)) {
+  if (!validOutletValues.includes(typeComboCCSOutlet)) {
     errors.push({
-      field: "priseTypeComboCcs",
+      field: "typeComboCCSOutlet",
       message:
-        "Le champ 'priseTypeComboCcs' est obligatoire et doit avoir la valeur 'TRUE' ou 'FALSE'.",
+        "'typeComboCCSOutlet' field is required and must have value 'TRUE' or 'FALSE'.",
     });
   }
 
-  if (!validPriseValues.includes(priseTypeChademo)) {
+  if (!validOutletValues.includes(typeChademoOutlet)) {
     errors.push({
-      field: "priseTypeChademo",
+      field: "typeChademoOutlet",
       message:
-        "Le champ 'priseTypeChademo' est obligatoire et doit avoir la valeur 'TRUE' ou 'FALSE'.",
+        "'typeChademoOutlet' field is required and must have value 'TRUE' or 'FALSE'.",
     });
   }
 
-  if (!validPriseValues.includes(priseTypeAutre)) {
+  if (!validOutletValues.includes(otherTypeOutlet)) {
     errors.push({
-      field: "priseTypeAutre",
+      field: "otherTypeOutlet",
       message:
-        "Le champ 'priseTypeAutre' est obligatoire et doit avoir la valeur 'TRUE' ou 'FALSE'.",
+        "'otherTypeOutlet' field is required and must have value 'TRUE' or 'FALSE'.",
     });
   }
 
-  // Si des erreurs sont présentes, retourne une réponse avec le code de statut 422
+  // If errors are present, return a response with status code 422
   if (errors.length) {
     res.status(422).json({ validationErrors: errors });
   } else {
-    // Si aucune erreur, passe à la fonction middleware suivante
+    // If no errors, proceed to the next middleware function
     next();
   }
 };
