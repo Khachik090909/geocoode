@@ -74,7 +74,10 @@ function CardCar() {
           <h1>Véhicule</h1>
         </div>
 
-        <button type="button" onClick={() => setModifyCar(!modifyCar)}>
+        <button type="button" onClick={() => {
+            setModifyCar(!modifyCar);
+            setCordoneClick(cordoneClick + 1);
+          }}>
           <img src={modifyCar ? croix : stylo} alt="stylo" />
         </button>
       </div>
