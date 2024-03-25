@@ -71,7 +71,7 @@ function CardProfile() {
   }, [userData.date_of_birth]);
   const handlerClick = (e) => {
     setShow(!show);
-    setCordoneClick(e.pageX);
+    setCordoneClick(e.pageY);
   };
   useEffect(() => {
     if (cordoneClick) {
