@@ -76,7 +76,7 @@ function CardPlug() {
             className="card-profile-header-button"
             onClick={(e) => {
               reservation.length > 0 && setShow(!show);
-              setCordoneClick(e.pageX);
+              setCordoneClick(e.pageY);
             }}
           >
             {show ? (
