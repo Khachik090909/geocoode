@@ -104,7 +104,7 @@ function CardCar() {
                 dataCars.map(
                   (car, index) =>
                     index > 0 && (
-                      <>
+                       <div key={car.model}>
                         <img
                           className="card-profile-line"
                           src={line}
@@ -123,7 +123,7 @@ function CardCar() {
                             <li>Type de prise: {car.type}</li>
                           </ul>
                         </div>
-                      </>
+                      </div>
                     )
                 )}
               {show && dataCars.length < dataUser && (
