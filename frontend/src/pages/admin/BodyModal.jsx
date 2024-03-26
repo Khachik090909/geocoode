@@ -28,6 +28,9 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
     setValider(false);
     setMotor(!motor);
   };
+  useEffect(() => {
+    apdeteState();
+  }, [route]);
   const handlerChangeValue = (e, id) => {
     setModifValue(e.target.value);
     setIdElementChange(id);
@@ -98,7 +101,15 @@ function BodyModal({ dataLoad, setDataLoad, fetchDataUsers, route }) {
         },
       }
     );
-
+    if (response.status === 500) {
+      setIsErrors([
+        {
+          field: "server",
+          message:
+            "Cet enregistrement ne peut pas être supprimé car il est référencé dans une autre table.",
+        },
+      ]);
+    }
     if (!response.ok) {
       const dataresponse = await response.json();
       if (dataresponse.validationErrors.length > 0) {

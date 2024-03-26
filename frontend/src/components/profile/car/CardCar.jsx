@@ -74,10 +74,13 @@ function CardCar() {
           <h1>Véhicule</h1>
         </div>
 
-        <button type="button" onClick={() => {
+        <button
+          type="button"
+          onClick={() => {
             setModifyCar(!modifyCar);
             setCordoneClick(cordoneClick + 1);
-          }}>
+          }}
+        >
           <img src={modifyCar ? croix : stylo} alt="stylo" />
         </button>
       </div>
@@ -97,7 +100,7 @@ function CardCar() {
               dataCars.map(
                 (car, index) =>
                   index > 0 && (
-                    <>
+                    <div key={car.model}>
                       <img
                         className="card-profile-line"
                         src={line}
@@ -116,7 +119,7 @@ function CardCar() {
                           <li>Type de prise: {car.type}</li>
                         </ul>
                       </div>
-                    </>
+                    </div>
                   )
               )}
             {show && dataCars.length < dataUser && (
